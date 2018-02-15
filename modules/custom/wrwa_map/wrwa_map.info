@@ -1,0 +1,9 @@
+name = WRWA map
+description = Map
+package = WRWA
+core = 7.x
+version = 7.x-1.x
+interface translation project = FALSE
+
+;files[] =
+;dependencies[] = 

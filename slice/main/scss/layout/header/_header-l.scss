@@ -1,0 +1,136 @@
+.site-header {
+
+  .front & {
+    padding: 0 49px;
+
+    .nav {
+      margin: 0;
+    }
+  }
+
+  .site-container {
+    height: 86px;
+  }
+
+  .weather {
+    position: relative;
+
+    &:before {
+      width: 1px;
+      height: 55px;
+      @include pseudo-block($top: 50%, $left: 0);
+      @include transform(translateY(-50%));
+      background: #fff;
+    }
+  }
+
+  .nav {
+    margin: 0 -95px 0 -49px;
+    clear: none;
+    float: right;
+    padding: 0;
+    margin: 0;
+    background: none;
+
+    .menu-block-wrapper > .menu {
+
+      ul {
+        position: absolute;
+        width: 194px;
+        text-align: center;
+        z-index: 15;
+        min-width: 100%;
+
+        li {
+          position: relative;
+
+          &.expanded {
+
+            &:before {
+              @include pseudo-block($right: 15px, $top: 50%);
+              @include transform(translateY(-50%));
+              content: '>';
+              z-index: 1;
+            }
+          }
+        }
+      }
+
+      & > li {
+
+        &:last-child > ul ul {
+          left: auto;
+          right: 100%;
+        }
+
+        &:first-child > ul {
+          right: auto;
+          left: 0;
+        }
+
+        & > ul {
+          right: 0;
+          top: 100%;
+
+          ul {
+            left: 100%;
+            top: 0;
+            margin-top: -12px;
+          }
+        }
+
+        & > a {
+          text-shadow: 1px 1px 1px #000;
+          padding: 31px 5px 30px;
+
+          @media (min-width: 1170px) {
+            padding: 31px 7px 30px;
+          }
+
+          .front & {
+            text-shadow: 1px 1px 1px #000;
+          }
+        }
+
+        &:hover > ul, li:hover ul {
+          opacity: 1;
+          visibility: visible;
+          @include transform(translate(0, 0));
+        }
+      }
+
+      .menu {
+        visibility: hidden;
+        opacity: 0;
+        @include transform(translate(0, -5px));
+      }
+    }
+  }
+
+  .search-wrapper {
+    right: -95px;
+    height: 84px;
+
+    .form-item {
+      width: 500px;
+
+      .form-text {
+        font-size: 22px;
+        padding: 29px 85px 28px 70px;
+      }
+    }
+
+    .form-actions {
+      left: 30px;
+    }
+
+    .btn-search a {
+      width: 86px;
+      height: 86px;
+    }
+
+    .show-all a {
+      padding: 10px;
+    }
+  }
+}

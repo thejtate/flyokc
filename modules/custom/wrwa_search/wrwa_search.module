@@ -1,0 +1,408 @@
+<?php
+
+/**
+ * @file
+ * Search functionality
+ */
+
+/**
+ * Implements hook_init().
+ */
+function wrwa_search_init() {
+  drupal_add_js(drupal_get_path('module', 'wrwa_search') . '/js/wrwa_search.js', array('weight' => 20));
+}
+
+
+/**
+ * Implements hook_menu().
+ */
+function wrwa_search_menu() {
+  $items = array();
+
+  $items['field_collection_item/%field_collection_item'] = array(
+    'page callback' => 'wrwa_search_field_collection_item_redirect',
+    'page arguments' => array(1),
+    'access callback' => 'entity_access',
+    'access arguments' => array('view', 'field_collection_item', 1),
+  );
+
+  return $items;
+}
+
+/**
+ * Page callback. Redirect field collection to host node with fragment #item-[field_collection_delta]
+ *
+ * @param \FieldCollectionItemEntity $field_collection_item
+ */
+function wrwa_search_field_collection_item_redirect(FieldCollectionItemEntity $field_collection_item) {
+
+  $hostEntity = $field_collection_item->hostEntity();
+  if(!empty($hostEntity->nid)) {
+    $redirect_url = 'node/' . $hostEntity->nid;
+    $redirect_options = array();
+    if(!empty($hostEntity->{$field_collection_item->field_name}[LANGUAGE_NONE])) {
+      $fc_delta = FALSE;
+      foreach ($hostEntity->{$field_collection_item->field_name}[LANGUAGE_NONE] as $delta => $value) {
+        if(!empty($value['value']) && $value['value'] == $field_collection_item->item_id) {
+          $fc_delta = $delta;
+        }
+      }
+
+      if($fc_delta !== FALSE) {
+        $redirect_options['fragment'] = 'item-' . $fc_delta;
+      }
+      drupal_goto($redirect_url, $redirect_options);
+    }
+  }
+
+  drupal_not_found();
+}
+
+//
+///**
+// * Implements hook_js().
+// */
+//function wrwa_search_js() {
+//  $items = array();
+//  $items['search'] = array(
+//    'callback' => 'wrwa_search_js_page',
+//  );
+//
+//  return $items;
+//}
+//
+//function wrwa_search_foo_page() {
+//  drupal_add_http_header('Content-Type', 'application/json');
+//  echo '[{"link":"http:\/\/wrwa.dev\/content\/gates","value":"Gates","fields":{"nid":"6","title":"Gates","path":["Maps","Gates"]},"group":{"group_id":"gates","group_name":"Gates"}},{"link":"http:\/\/wrwa.dev\/content\/test","value":"test","fields":{"nid":"9","title":"test","path":[]},"group":{"group_id":"test","group_name":"test"}},{"link":"http:\/\/wrwa.dev\/content\/test2","value":"test2","fields":{"nid":"10","title":"test2","path":[]},"group":{"group_id":"test2","group_name":"test2"}},{"label":"Show all results","value":"te","link":"search?text=te","group":{"group_id":"all_results"},"fields":{"label":"Show all results"}}]';
+//  drupal_exit();
+//}
+//
+//function wrwa_search_js_page() {
+//
+//  drupal_add_http_header('Content-Type', 'application/json');
+//  echo '[{"link":"http:\/\/wrwa.dev\/content\/gates","value":"Gates","fields":{"nid":"6","title":"Gates","path":["Maps","Gates"]},"group":{"group_id":"gates","group_name":"Gates"}},{"link":"http:\/\/wrwa.dev\/content\/test","value":"test","fields":{"nid":"9","title":"test","path":[]},"group":{"group_id":"test","group_name":"test"}},{"link":"http:\/\/wrwa.dev\/content\/test2","value":"test2","fields":{"nid":"10","title":"test2","path":[]},"group":{"group_id":"test2","group_name":"test2"}},{"label":"Show all results","value":"te","link":"search?text=te","group":{"group_id":"all_results"},"fields":{"label":"Show all results"}}]';
+//  drupal_exit();
+//
+//  //drupal_add_http_header('Content-Type', 'application/json');
+////return '[{"link":"http:\/\/wrwa.dev\/content\/gates","value":"Gates","fields":{"nid":"6","title":"Gates","path":["Maps","Gates"]},"group":{"group_id":"gates","group_name":"Gates"}},{"link":"http:\/\/wrwa.dev\/content\/test","value":"test","fields":{"nid":"9","title":"test","path":[]},"group":{"group_id":"test","group_name":"test"}},{"link":"http:\/\/wrwa.dev\/content\/test2","value":"test2","fields":{"nid":"10","title":"test2","path":[]},"group":{"group_id":"test2","group_name":"test2"}},{"label":"Show all results","value":"te","link":"search?text=te","group":{"group_id":"all_results"},"fields":{"label":"Show all results"}}]';
+//  //drupal_exit();
+//}
+//
+//function wrwa_search_autocomplete() {
+//
+//  $user_input = filter_xss($_GET['term']);
+//
+//  $view = views_get_view('search_autocomplete_source');
+//  $view_exposed_filters = views_get_view('search_autocomplete_source');
+//  $view_exposed_filters->set_display('default');
+//  $view_exposed_filters->is_cacheable = FALSE;
+//  $view_exposed_filters->execute();
+//  foreach ($view_exposed_filters->exposed_raw_input as $key => $value) {
+//    $view->exposed_input[$key] = $user_input;
+//  }
+//
+//  // Add our custom data in the view for rendering.
+//  $view->autocompletion_data['user_input'] = $user_input;
+//  $view->autocompletion_data['no_results'] = '{"label":"No results found for [search-phrase]. Click to perform full search.","value":"[search-phrase]","link":"search?text=[search-phrase]","group":{"group_id":"no_results"}}';
+//  $view->autocompletion_data['all_results'] = '{"label":"Show all results","value":"[search-phrase]","link":"search?text=[search-phrase]","group":{"group_id":"all_results"}}';
+//
+//  if (method_exists($view, 'render')) {
+//    echo $view->render();
+//  }
+//  else {
+//    echo drupal_json_encode(array());
+//  }
+//  exit();
+//}
+
+/**
+ * Implements hook_form_alter().
+ */
+function wrwa_search_form_alter(&$form, &$form_state, $form_id) {
+  if($form_id == 'search_block_form') {
+    $form['#submit'] = array('wrwa_search_search_box_form_submit');
+
+  }
+}
+
+/**
+ * Process a block search form submission. Redirect to views page.
+ */
+function wrwa_search_search_box_form_submit($form, &$form_state) {
+
+  if (isset($_GET['destination'])) {
+    unset($_GET['destination']);
+  }
+
+  if ($form_state['values']['search_block_form'] == '') {
+    form_set_error('keys', t('Please enter some keywords.'));
+  }
+
+  $form_id = $form['form_id']['#value'];
+  $form_state['redirect'] = 'search?text=' . trim($form_state['values'][$form_id]);
+  $form_state['redirect'] = array(
+    'search',
+    array(
+      'query' => array(
+        'text' => trim($form_state['values'][$form_id]),
+      ),
+    )
+  );
+}
+
+
+function wrwa_search_menu_node_insert($link, $node) {
+//  dsm($link);
+//  dsm($node);
+}
+
+function wrwa_search_menu_node_update($link, $node) {
+//  dsm($link);
+//  dsm($node);
+}
+
+//function wrwa_search_views_data_alter(&$data) {
+//
+//}
+
+function wrwa_search_get_menus_map() {
+
+  $menus = array('main-menu', 'menu-footer');
+
+  $static_results = &drupal_static(__FUNCTION__);
+  if(empty($static_results)) {
+    $q = db_select('menu_links', 'l');
+    $q->fields('l', array('mlid', 'link_path', 'link_title', 'depth', 'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8', 'p9'));
+    $q->fields('n', array('nid'));
+    $q->condition('l.hidden', 0);
+    $q->condition('l.menu_name', $menus, 'IN');
+    $q->leftJoin('menu_node', 'n', 'n.mlid = l.mlid');
+    $q->orderBy('menu_name');
+
+    $results = $q->execute()
+      ->fetchAllAssoc('mlid');
+
+    $static_results = $results;
+  } else {
+    //dsm('static');
+    $results = $static_results;
+  }
+
+  return $results;
+}
+
+function wrwa_search_preprocess_views_search_autocomplete_style(&$vars) {
+
+  if($vars['view']->name == 'search_autocomplete_source') {
+    //this views is deprecated, now used 'search_autocomplete_source_combined'
+    foreach ($vars['rows'] as $row_key => &$row) {
+      if(is_array($row) && !empty($row['fields']['nid'])) {
+        $published = _wrwa_search_check_published($row['fields']['nid']);
+
+        if (!empty($published)) {
+          $row['fields']['path'] = wrwa_search_get_node_shortest_menu_path($row['fields']['nid']);
+
+          if (empty($row['fields']['path'])) {
+            $node_type = wrwa_search_get_node_type($row['fields']['nid']);
+            $node_type = !empty($node_type[0]) ? $node_type[0] : '';
+            switch ($node_type) {
+              case 'news':
+                wrwa_search_get_news_shortest_path($row);
+                break;
+              case 'alerts':
+                $row['fields']['path'][] = t('Pilot Information');
+                $row['fields']['path'][] = t('Alerts & Advisories');
+                $row['fields']['title'] = t('Alerts & Advisories');
+                break;
+              case 'projects':
+                $row['fields']['path'][] = t('Current projects');
+                $row['fields']['title'] = t('Current projects');
+                break;
+              case 'job':
+                $row['fields']['path'][] = t('Employment');
+                $row['fields']['path'][] = t('Current Job Openings');
+                $row['fields']['title'] = t('Current Job Openings');
+                break;
+            }
+          }
+        }
+        else {
+          unset($vars['rows'][$row_key]);
+        }
+      }
+    }
+  } else if($vars['view']->name == 'search_autocomplete_source_combined') {
+
+    foreach ($vars['rows'] as $row_key => &$row) {
+      if(is_array($row)) {
+        $fields = $row['fields'];
+        $row['fields'] = array();
+
+       $title_fields = array('node_title', 'field_collection_item_field_lbs_items_title', 'field_fellow_airports_name_txt');
+        foreach ($title_fields as $title_field_key) {
+          if(!empty($fields[$title_field_key])) {
+            $row['value'] = $fields[$title_field_key];
+            $row['fields']['title'] = $fields[$title_field_key];
+            break;
+          }
+        }
+
+        if(!empty($fields['item_id_1'])) {
+          if(strpos($fields['item_id_1'], 'field_collection_item') !== FALSE) {
+            $field_collection_id = str_replace('field_collection_item/','', $fields['item_id_1']);
+            $field_collection_item = field_collection_item_load($field_collection_id);
+            $host_entity = $field_collection_item->hostEntity();
+            if(!empty($host_entity->nid)) {
+              $node_type = $host_entity->type;
+              $nid = $host_entity->nid;
+            }
+          } else {
+            $nid = str_replace('node/','', $fields['item_id_1']);
+            $node_type = !empty($fields['type']) ? $fields['type'] : '';
+          }
+
+          $published = _wrwa_search_check_published($nid);
+
+          if (!empty($published)) {
+            $row['fields']['path'] = wrwa_search_get_node_shortest_menu_path($nid);
+            if (empty($row['fields']['path']) && !empty($node_type)) {
+              switch ($node_type) {
+                case 'news':
+                  wrwa_search_get_news_shortest_path($row);
+                  break;
+                case 'alerts':
+                  $row['fields']['path'][] = t('Pilot Information');
+                  $row['fields']['path'][] = t('Alerts & Advisories');
+                  $row['fields']['title'] = t('Alerts & Advisories');
+                  break;
+                case 'projects':
+                  $row['fields']['path'][] = t('Current projects');
+                  $row['fields']['title'] = t('Current projects');
+                  break;
+                case 'job':
+                  $row['fields']['path'][] = t('Employment');
+                  $row['fields']['path'][] = t('Current Job Openings');
+                  $row['fields']['title'] = t('Current Job Openings');
+                  break;
+              }
+            }
+          }
+          else {
+            unset($vars['rows'][$row_key]);
+          }
+        }
+
+      }
+    }
+  }
+  //dsm($vars);
+}
+
+function wrwa_search_get_node_shortest_menu_path($nid) {
+  $path_titles = array();
+  $map = wrwa_search_get_menus_map();
+  $min_depth = NULL;
+  $min_link_info = NULL;
+
+
+  foreach ($map as $mlid => $link_info) {
+    if($link_info->nid == $nid) {
+      if(empty($min_depth) || $min_depth > $link_info->depth) {
+        $min_depth = $link_info->depth;
+        $min_link_info = $link_info;
+      }
+    }
+  }
+
+  if(!empty($min_link_info)) {
+
+    for($i = 1; $i <= 9; $i++) {
+      if(!empty($min_link_info->{'p' . $i})) {
+        $link_mlid = $min_link_info->{'p' . $i};
+        if(!empty($map[$link_mlid]->link_title)) {
+          $path_titles[] = $map[$link_mlid]->link_title;
+        } else {
+          break;//exit from cycle
+        }
+      }
+    }
+  }
+
+  return $path_titles;
+}
+
+function wrwa_search_css_alter(&$css) {
+//  dsm($css);
+
+ if(is_array($css)) {
+   foreach ($css as $key => $item) {
+     if(strpos($key, 'search_autocomplete/css/themes') !== FALSE) {
+       unset($css[$key]);
+     }
+     if(strpos($key, 'misc/ui/jquery.ui.autocomplete.css') !== FALSE) {
+       //unset($css[$key]);
+     }
+   }
+ }
+//  dsm($css);
+}
+
+function wrwa_search_get_news_shortest_path(&$row) {
+  $row['fields']['path'][] = t('News');
+  $news_type_tid = wrwa_search_get_news_type($row['fields']['nid']);
+
+  if (!empty($news_type_tid[0])) {
+    $news_type = wrwa_search_get_taxonomy_name($news_type_tid[0]);
+    if (!empty($news_type[0])) {
+      $row['fields']['path'][] = $news_type[0];
+      $row['fields']['title'] = $news_type[0];
+    }
+  }
+  else {
+    $row['fields']['path'][] = t('All');
+    $row['fields']['title'] = t('All');
+  }
+}
+
+function wrwa_search_get_node_type($nid) {
+  $type = db_select('node', 'n')
+    ->fields('n', array('type'))
+    ->condition('nid', $nid)
+    ->execute()
+    ->fetchCol();
+
+  return $type;
+}
+
+function wrwa_search_get_news_type($nid) {
+  $type = db_select('field_data_field_news_taxonomy_term_ref', 'type')
+    ->fields('type', array('field_news_taxonomy_term_ref_tid'))
+    ->condition('entity_id', $nid)
+    ->execute()
+    ->fetchCol();
+
+  return $type;
+}
+
+/**
+ * Implements hook_access().
+ */
+function wrwa_search_get_taxonomy_name($tid) {
+  $name = db_select('taxonomy_term_data', 'ttd')
+    ->fields('ttd', array('name'))
+    ->condition('tid', $tid)
+    ->execute()
+    ->fetchCol();
+
+  return $name;
+}
+
+function _wrwa_search_check_published($nid) {
+  $status = db_select('node', 'n')
+    ->fields('n', array('status'))
+    ->condition('nid', $nid)
+    ->execute()
+    ->fetchField();
+
+  return $status;
+}

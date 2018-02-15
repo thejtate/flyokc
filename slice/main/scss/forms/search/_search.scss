@@ -1,0 +1,211 @@
+html.js input.form-autocomplete {
+  background-position: 100% 200%;
+}
+
+html.js input.throbbing {
+  background-image: image-url('bg/loader2.gif') !important;
+  background-position: right 30px !important;
+  background-repeat: no-repeat !important;
+}
+
+.form-search {
+  position: absolute;
+  left: 50%;
+  top: 270px;
+  z-index: 5;
+  margin-left: -15px;
+  @include transform(translate(-50%, 0));
+
+  @media (max-width: 1400px) {
+    top: 200px;
+  }
+
+  &.form-search-processed .form-actions {
+    left: calc(100% + 10px);
+    opacity: 1;
+  }
+
+  input:not([type=submit]):not([type=checkbox]):not([type=radio]) {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #fff !important;
+    font-family: $klavika-medium;
+    border-bottom: 3px solid #fff !important;
+    @include input-placeholder(#fff !important);
+    background-color: transparent !important;
+    padding: 0;
+  }
+
+  .form-actions {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    opacity: 0;
+    @include transition(left .6s, opacity .6s);
+
+    .form-submit {
+      border: none;
+      padding: 0;
+      margin: 0;
+      @include text-hide();
+      @include transition(transform .2s);
+
+      &:hover {
+        @include transform(translate(5px, 0));
+      }
+    }
+  }
+
+  .ui-menu {
+
+    li.ui-menu-item a {
+      position: relative;
+
+      &:before {
+        @include pseudo-block($top: 0, $left: 0, $right: 0, $bottom: 0);
+        background: rgba(255, 255, 255, 0.11);
+        display: none;
+      }
+    }
+
+    li.ui-menu-item a.ui-state-focus:before {
+   //   display: block;
+    }
+  }
+
+  .ui-autocomplete {
+    margin: 0;
+    padding: 0;
+    z-index: 10;
+    border: none;
+    width: 100% !important;
+
+    .ui-autocomplete-field-title {
+      line-height: 1;
+    }
+
+    li {
+      margin: 0;
+
+      &.ui-menu-item-odd a {
+        background: #088eca;
+      }
+    }
+
+    .ui-autocomplete-field-term {
+      font-weight: bold;
+    }
+
+    .ui-autocomplete-field-group {
+      display: none;
+    }
+
+    .btn-show-all {
+      position: absolute;
+      right: 0;
+      top: -45px;
+      color: #fff;
+      font-size: 14px;
+      background: #8054a2;
+      @include border-radius(15px);
+      padding: 4px 15px;
+      @include box-shadow(2px 2px 0px 0px rgba(0, 0, 0, 0.28));
+      font-family: $klavika-italic;
+      cursor: pointer;
+      box-shadow: none;
+      border: none;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    .pull-left {
+      font-size: 24px;
+    }
+
+    .pull-right {
+      font-size: 9px;
+      font-family: $klavika-italic;
+      text-align: right;
+
+      @media (min-width: $width-tablet) {
+        font-size: 18px;
+      }
+
+      span {
+        display: inline-block;
+        position: relative;
+
+        &:first-child {
+          padding-right: 22px;
+          margin-right: 5px;
+
+          @media (min-width: $width-tablet) {
+            padding-right: 28px;
+            margin-right: 14px;
+          }
+
+          &:before {
+            @include pseudo-block($top: 50%, $right: 0);
+            @include oneline-sprite-box($icons, arr-right);
+            @include transform(translateY(-50%) scale(.7));
+
+            @media (min-width: $width-tablet) {
+              @include transform(translateY(-50%) scale(1));
+            }
+          }
+        }
+      }
+    }
+
+    a:not(.btn-show-all) {
+      @include clearfix();
+      display: block;
+      padding: 5px 10px;
+      background: #1a9ad6;
+      @include transition(all .3s);
+      color: #fff;
+      @include border-radius(0);
+      border: none !important;
+      margin: 0 !important;
+      font-size: 11px;
+
+      @media (min-width: $width-tablet) {
+        padding: 3px 20px;
+        font-size: 14px;
+      }
+
+      @media (min-width: $width) {
+
+        &:hover {
+          opacity: .8;
+        }
+      }
+
+      & > div {
+        display: -webkit-box!important;
+        display: -webkit-flex!important;
+        display: -ms-flexbox!important;
+        display: flex!important;
+        text-align: left;
+
+        -webkit-box-pack: justify!important;
+        -webkit-justify-content: space-between!important;
+        -ms-flex-pack: justify!important;
+        justify-content: space-between!important;
+
+        -webkit-box-align: center!important;
+        -webkit-align-items: center!important;
+        -ms-flex-align: center!important;
+        align-items: center!important;
+
+        width: 100%;
+        min-height: 39px;
+      }
+    }
+  }
+}

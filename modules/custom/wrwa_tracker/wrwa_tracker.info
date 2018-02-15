@@ -1,0 +1,9 @@
+name = WRWA flight tracker
+description = WRWA flight tracker
+package = WRWA
+core = 7.x
+version = 7.x-1.x
+interface translation project = FALSE
+
+;files[] =
+dependencies[] = wrwa_flights

@@ -1,0 +1,119 @@
+.page-airport-contacts {
+
+  .content-wrapper {
+    padding-bottom: 40px;
+
+    @media (min-width: 1098px) {
+      padding-bottom: 135px;
+    }
+
+    .top-navigation {
+      margin-bottom: 35px;
+    }
+  }
+
+  .contact-info {
+    font-size: 15px;
+    color: #626262;
+    text-align: center;
+    padding-bottom: 15px;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 50px;
+
+    @media (min-width: 768px) {
+      padding-bottom: 35px;
+      font-size: 17px;
+    }
+
+    p {
+      margin: 0 0 6px;
+    }
+
+    span {
+      display: inline-block;
+      vertical-align: top;
+      margin: 2px 5px;
+    }
+
+    a {
+      color: #626262;
+    }
+
+    &:before {
+      @include pseudo-block($top: -65px, $left: 50%, $bottom: 0);
+      width: 5000px;
+      background: #eeeeee;
+      @include translateX(-50%);
+      z-index: -1;
+    }
+
+    .item {
+      display: block;
+      margin: 0 10px 15px;
+
+      @media (min-width: 768px) {
+        margin: 0 30px 0 0;
+        display: inline-block;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      @media (min-width: 1098px) {
+        margin: 0 90px 0 0;
+      }
+    }
+
+    strong {
+      font-size: 18px;
+
+      @media (min-width: 768px) {
+        font-size: 23px;
+      }
+    }
+  }
+
+  .desc {
+    @include clearfix();
+    color: #3c3c3c;
+
+    .right-part {
+      width: 100%;
+      font-size: 14px;
+
+      @media (min-width: 768px) {
+        float: left;
+        width: 410px;
+        padding-left: 20px;
+      }
+
+      @media (min-width: 1098px) {
+        width: 590px;
+      }
+
+      h4 {
+        font-size: 23px;
+        text-transform: uppercase;
+        margin: 0 0 12px;
+        font-family: $klavika-bold;
+      }
+
+      p {
+        margin: 0 0 35px;
+      }
+
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+          margin-bottom: 11px;
+        }
+      }
+    }
+  }
+
+}

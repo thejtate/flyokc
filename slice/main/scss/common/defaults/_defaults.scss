@@ -1,0 +1,250 @@
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  height: 100%;
+  font-size: 14px;
+  font-family: $klavika-regular;
+  -webkit-font-smoothing: antialiased;
+  color: #3c3c3c;
+
+  &.sidebar-desc-is-active, &.active-mobile-sidebar, &.active-mobile-tooltip {
+
+    .mobile &, .tablet & {
+      overflow: hidden;
+    }
+
+    .tablet & {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+    }
+  }
+
+  &.page-map {
+    background: #343434;
+  }
+
+  &.front {
+    color: #fff;
+  }
+}
+
+*, :after, :before {
+  @include box-sizing(border-box);
+  outline: none;
+}
+
+h1, h2, h3, h4, h5, h6, label {
+  font-weight: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $klavika-medium;
+  margin: 0;
+}
+
+strong {
+  font-family: $klavika-bold;
+}
+
+h4 {
+  text-transform: uppercase;
+  font-family: $klavika-bold;
+  font-size: 18px;
+  margin: 0 0 20px;
+
+  @media (min-width: $width-tablet) {
+    font-size: 23px;
+    margin: 0 0 35px;
+  }
+}
+
+h2 {
+  font-size: 48px;
+  margin: 0 0 20px;
+}
+
+h6 {
+  font-size: 18px;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+
+img[style*="right"] {
+  margin: 0 0 10px 20px;
+  clear: right;
+}
+
+img[style*="left"] {
+  margin: 0 20px 10px 0;
+  clear: left;
+}
+
+img {
+  max-width: 100%;
+  height: auto !important;
+}
+
+ul {
+  margin: 0;
+  padding: 0 0 0 16px;
+
+  li {
+    margin: 0 0 16px;
+    padding: 0;
+  }
+}
+
+p {
+  margin: 0 0 16px;
+}
+
+a {
+  text-decoration: none;
+  @include transition(opacity .3s, background .3s, border-radius .3s, color .3s);
+  outline: none !important;
+  color: #009bdf;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.full-block {
+  position: relative;
+  left: 50%;
+
+  .text-style-a {
+    max-width: none !important;
+  }
+}
+
+.webform-confirmation {
+  font-size: 17px;
+
+  @media (min-width: $width-tablet) {
+    font-size: 24px;
+  }
+
+  @media (min-width: $width-middle) {
+    font-size: 28px;
+  }
+}
+
+.page-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-size: cover;
+  background-position: 50% 0%;
+  z-index: -1;
+  background-repeat: no-repeat;
+}
+
+/*move scale-jump*/
+@keyframes scale-jump {
+
+  0% {
+    @include transform(scale(1));
+  }
+
+  50% {
+    @include transform(scale(.9));
+  }
+
+  100% {
+    @include transform(scale(1));
+  }
+}
+
+@-webkit-keyframes scale-jump {
+
+  0% {
+    @include transform(scale(1));
+  }
+
+  50% {
+    @include transform(scale(.9));
+  }
+
+  100% {
+    @include transform(scale(1));
+  }
+}
+
+/*highlighting elements of map*/
+
+@include keyframes(anim) {
+  0% {
+    width: 1px;
+    height: 1px;
+    opacity: 1;
+    border: 0 solid #ff4e19;
+  }
+
+  100% {
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+    border: 20px solid #ff4e19;
+  }
+}
+
+/*left to right*/
+@keyframes left-to-right {
+
+  0% {
+    @include translate(0, 0);
+  }
+
+  25% {
+    @include translate(-5px, 0);
+  }
+
+  50% {
+    @include translate(0, 0);
+  }
+
+  75% {
+    @include translate(5px, 0);
+  }
+
+  100% {
+    @include translate(0, 0);
+  }
+}
+
+@-webkit-keyframes left-to-right {
+
+  0% {
+    @include translate(0, 0);
+  }
+
+  25% {
+    @include translate(-5px, 0);
+  }
+
+  50% {
+    @include translate(0, 0);
+  }
+
+  75% {
+    @include translate(5px, 0);
+  }
+
+  100% {
+    @include translate(0, 0);
+  }
+}
+
+
+#FVWebContent0 {
+  height: 1200px;
+}

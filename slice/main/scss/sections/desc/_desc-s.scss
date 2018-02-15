@@ -1,0 +1,26 @@
+.section-desc {
+
+  .site-container, .left-part, .right-part {
+    display: block;
+  }
+
+  .site-container {
+    padding: 15px 70px 15px 15px;
+  }
+
+  .left-part, .right-part {
+    padding: 0;
+  }
+
+  .left-part {
+    display: inline-block;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .right-part {
+    border-left: none;
+  }
+}

@@ -1,0 +1,17 @@
+<?php
+/**
+ * @file
+ * weather_custom
+ */
+
+define('WEATHER_CUSTOM_LOCATION', 'Oklahoma City, OK');
+
+function weather_custom_preprocess_page(&$vars) {
+  $path = drupal_get_path('module', 'weather_custom');
+  drupal_add_js($path . '/js/lib/jquery.simpleWeather.js');
+  drupal_add_js($path . '/js/weather_custom.js');
+  drupal_add_js(array('weather_custom' => array('location' => WEATHER_CUSTOM_LOCATION)), 'setting');
+  drupal_add_css($path . '/css/weather_custom.css');
+
+  $vars['weather'] = '<div class="weather weather-custom-item"></div>';
+}

@@ -1,0 +1,263 @@
+body:not(.resizing) .b-map {
+
+  .nav-sidebar, .sidebar-desc {
+    @include transition(transform .4s, opacity .4s);
+  }
+}
+
+.b-map {
+
+  .nav-sidebar, .sidebar-desc {
+    text-align: left;
+    background: #202020;
+    color: #fff;
+    opacity: 0;
+    font-size: 14px;
+    right: 0;
+    top: 0;
+    left: 0;
+    position: fixed;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: 60px auto 0;
+    display: none;
+    overflow-y: auto;
+    max-height: calc(100% - 75px);
+
+    .mobile & {
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .desktop & {
+      margin: 0;
+      max-height: none;
+      bottom: 0;
+      left: auto;
+      position: absolute;
+      padding-top: 130px;
+      padding-bottom: 35px;
+      @include translate(100%, 0);
+      display: block;
+
+      @media (min-width: $width-middle) {
+        padding-top: 146px;
+      }
+    }
+  }
+
+  .level-upper-sidebar {
+
+    .level-upper-is-active & {
+      @include translate(0, 0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .active-mobile-sidebar.level-upper-is-active & {
+      display: block;
+      opacity: 1;
+    }
+  }
+
+  .level-lower-sidebar {
+
+    .level-lower-is-active & {
+      @include translate(0, 0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .active-mobile-sidebar.level-lower-is-active & {
+      display: block;
+      opacity: 1;
+    }
+  }
+
+  .level-parking-sidebar {
+
+    .level-parking-is-active &, .level-parking-map-is-active & {
+      @include translate(0, 0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .active-mobile-sidebar.level-parking-is-active &, .active-mobile-sidebar.level-parking-map-is-active & {
+      display: block;
+      opacity: 1;
+    }
+  }
+
+  .nav-sidebar {
+    z-index: 9999;
+    width: 90%;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    .desktop & {
+      z-index: 3;
+      width: 223px;
+      padding-left: 28px;
+      padding-right: 28px;
+    }
+
+    h2 {
+      font-size: 24px;
+      text-transform: uppercase;
+      color: #aaaaaa;
+      font-family: $klavika-light;
+    }
+
+    .sidebar-desc-is-active & {
+      @include translate(100%, 0);
+      opacity: 0 !important;
+    }
+
+    .sidebar-item {
+      margin-bottom: 22px;
+      padding-bottom: 28px;
+      border-bottom: 2px dotted #454545;
+
+      &:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+    }
+
+    .ico {
+      left: 13px;
+      top: 50%;
+      @include translate(-50%, -50%);
+    }
+
+    .ico-gate {
+      position: static;
+      @include translate(0, 0);
+      padding-left: 0;
+    }
+
+    .ico-baggage-office:before {
+      @include retina-sprite($icons, $icons2, icon-baggage-offices);
+    }
+
+    .ico-rental-car:before {
+      @include retina-sprite($icons, $icons2, icon-rental-car);
+    }
+
+    .ico-ticket-counter, .ico-baggage {
+      width: 24px;
+      height: 16px;
+    }
+
+    .ico-baggage-office, .ico-rental-car, .ico-g2 {
+      font-size: 16px;
+    }
+
+    a, .p {
+      color: #fff;
+      text-decoration: none;
+      position: relative;
+      padding-left: 32px;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .p {
+      cursor: default;
+    }
+
+    ul, li {
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      list-style: none;
+      margin: 0 0 6px 0;
+    }
+
+    .items {
+      margin-top: 4px;
+    }
+  }
+
+  .sidebar-desc {
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 90%;
+    z-index: 9999;
+
+    .desktop & {
+      z-index: 3;
+      padding-left: 40px;
+      padding-right: 40px;
+      width: 345px;
+    }
+
+    .sidebar-desc-is-active & {
+      display: block;
+      opacity: 1;
+
+      .desktop & {
+        @include translate(0, 0);
+      }
+    }
+
+    h3 {
+      font-family: $klavika-regular;
+      font-size: 26px;
+      margin-bottom: 14px;
+      line-height: 1;
+      padding-right: 20px;
+
+      .desktop & {
+        padding-right: 0;
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+    }
+
+    .img {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .item {
+      display: none;
+
+      &.active {
+        display: block;
+      }
+    }
+  }
+
+  .btn-close, .btn-sidebar-close {
+    color: #fff;
+    font-family: $klavika-regular;
+    text-decoration: none;
+    line-height: 1;
+    @include transform(rotate(45deg));
+    @include transition(color .3s);
+    font-size: 40px;
+
+    &:hover {
+      color: #009bdf;
+    }
+  }
+
+  .btn-close {
+    position: absolute;
+    left: 20px;
+    top: 8px;
+    display: none;
+
+    .desktop & {
+      top: 72px;
+      display: block;
+
+      @media (min-width: $width-middle) {
+        top: 90px;
+      }
+    }
+  }
+}

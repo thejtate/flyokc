@@ -1,0 +1,112 @@
+.b-travel-alert {
+  background: #f66932;
+  display: table;
+  position: absolute;
+  left: 50%;
+  @include transform(translateX(-50%));
+  z-index: 2;
+  overflow: hidden;
+  max-width: 965px;
+  width: 100%;
+
+  &.style-a {
+    padding: 10px;
+    font-family: klavika-bold;
+    font-size: 14px;
+    line-height: 1.1;
+    display: block;
+    text-align: center;
+
+    @media (min-width: $width-tablet) {
+      display: -webkit-box!important;
+      display: -webkit-flex!important;
+      display: -ms-flexbox!important;
+      display: flex!important;
+      text-align: left;
+
+      -webkit-box-pack: justify!important;
+      -webkit-justify-content: space-between!important;
+      -ms-flex-pack: justify!important;
+      justify-content: space-between!important;
+
+      -webkit-box-align: center!important;
+      -webkit-align-items: center!important;
+      -ms-flex-align: center!important;
+      align-items: center!important;
+      max-width: 631px;
+      padding: 10px 15px 10px 76px;
+
+      &:before {
+        @include pseudo-block($left: 35px, $top: 50%);
+        @include translate(0, -50%);
+        @include oneline-sprite-box($icons, ico-alert);
+      }
+    }
+
+    @media (min-width: $width-middle) {
+      max-width: 965px;
+      padding: 15px 15px 15px 76px;
+    }
+
+    .text-wrap {
+      padding-top: 6px;
+      margin-bottom: 10px;
+
+      @media (min-width: $width-tablet) {
+        padding-right: 20px;
+        margin-bottom: 0;
+      }
+    }
+
+    .text {
+      font-size: 20px;
+
+      @media (min-width: $width-middle) {
+        font-size: 28px;
+      }
+
+      p {
+        margin-bottom: 0;
+      }
+    }
+
+    .btn-wrap {
+      font-family: klavika-regular;
+      line-height: 1.3;
+
+      a {
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .right-part {
+    font-size: 14px;
+
+    p {
+      margin: 0;
+    }
+
+    a {
+      color: #fff;
+    }
+  }
+
+  .close {
+    display: block;
+    @include oneline-sprite-box($icons, close);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 17px;
+
+    &:before {
+      @include pseudo-block($top: 50%, $left: -20px);
+      width: 1px;
+      height: 70px;
+      background: #faaa8a;
+      @include transform(translateY(-50%));
+    }
+  }
+}
+

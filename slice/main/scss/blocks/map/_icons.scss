@@ -1,0 +1,328 @@
+.b-map {
+
+  .ico {
+    position: absolute;
+    font-size: 15px;
+    color: #fff;
+    display: block;
+    text-decoration: none;
+    z-index: 1;
+    width: 16px;
+    height: 16px;
+
+    &:not(.ss-icon) {
+      font-family: $klavika-bold;
+
+      &:before {
+        content: '';
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        @include translate(-50%, -50%);
+      }
+    }
+
+    &:hover {
+      z-index: 2;
+
+      &:after {
+        @include pseudo-block($left: 50%, $bottom: 100%);
+        width: 66px;
+        @include translate(-50%, 0);
+        height: 26px;
+      }
+
+      .tooltip {
+        opacity: 1;
+        visibility: visible;
+        @include translate(-50%, -25px);
+        @include transition(opacity .2s, visibility .2s, transform .2s);
+      }
+
+      .actions {
+        display: block;
+      }
+    }
+
+    .tooltip {
+      bottom: 100%;
+      left: 50%;
+    }
+  }
+
+  .ico-plane {
+    display: block;
+    position: absolute;
+    @include retina-sprite($icons, $icons2, icon-plane-a);
+    opacity: .15;
+    -webkit-transform-origin: center center;
+    -ms-transform-origin: center center;
+    transform-origin: center center;
+    @include backface-visibility(hidden);
+
+    &:nth-child(1) {
+      left: 15.9%;
+      top: -2.3%;
+      @include transform(rotate(147deg));
+    }
+
+    &:nth-child(2) {
+      left: 41%;
+      top: -5%;
+      @include transform(rotate(194deg));
+    }
+
+    &:nth-child(3) {
+      left: 86.9%;
+      top: -1%;
+      @include transform(rotate(180deg));
+    }
+
+    &:nth-child(4) {
+      left: 89.1%;
+      top: 18.6%;
+    }
+
+    &:nth-child(5) {
+      left: 73.4%;
+      top: 18.6%;
+    }
+  }
+
+  .ico-bar {
+    background: #005f89;
+    font-size: 11px;
+  }
+
+  .ico-shop {
+    background: #bd4eac;
+    font-size: 11px;
+  }
+
+  .ico-atm:before {
+    @include retina-sprite($icons, $icons2, icon-atm);
+  }
+
+  .ico-escalator:before {
+    @include retina-sprite($icons, $icons2, icon-escalator);
+  }
+
+  .ico-elevator:before {
+    @include retina-sprite($icons, $icons2, icon-elevator);
+  }
+
+  .ico-information:before {
+    @include retina-sprite($icons, $icons2, icon-information);
+  }
+
+  .ico-ymca:before {
+    @include retina-sprite($icons, $icons2, icon-ymca);
+  }
+
+  .ico-security:before {
+    @include retina-sprite($icons, $icons2, icon-security);
+  }
+
+  .ico-restroom:before {
+    @include retina-sprite($icons, $icons2, icon-restroom-a);
+  }
+
+  .ico-coffee:before {
+    @include retina-sprite($icons, $icons2, icon-coffee-a);
+  }
+
+  .ico-shoe:before {
+    @include retina-sprite($icons, $icons2, icon-shoe-a);
+  }
+  .ico-vending:before {
+    @include retina-sprite($icons, $icons2, vending);
+  }
+
+  .ico-phone:before {
+    @include retina-sprite($icons, $icons2, icon-phone);
+  }
+
+  .ico-pet-area:before {
+    @include retina-sprite($icons, $icons2, icon-pet-relief-area);
+  }
+
+  .ico-hourly-p:before {
+    @include retina-sprite($icons, $icons2, icon-hourly-p);
+  }
+
+  .ico-covered-p:before {
+    @include retina-sprite($icons, $icons2, icon-covered-p);
+  }
+
+  .ico-cashier:before {
+    @include retina-sprite($icons, $icons2, icon-cashier);
+  }
+
+  .ico-remote-p:before {
+    @include retina-sprite($icons, $icons2, icon-remote-p);
+  }
+
+  .ico-long-p:before {
+    @include retina-sprite($icons, $icons2, icon-long-p);
+  }
+
+  .ico-semi-p:before {
+    @include retina-sprite($icons, $icons2, icon-semi-p);
+  }
+
+  .ico-area:before {
+    @include retina-sprite($icons, $icons2, icon-area);
+  }
+
+  .ico-premium-p:before {
+    @include retina-sprite($icons, $icons2, ico-premium-p);
+  }
+
+  .ico-cashier:before {
+    @include retina-sprite($icons, $icons2, icon-cashier);
+  }
+
+  .ico-nursery:before {
+    @include retina-sprite($icons, $icons2, icon-nursery);
+  }
+
+  .ico-conferenceroom:before {
+    @include retina-sprite($icons, $icons2, icon-conferenceroom);
+  }
+
+  .ico-g2:before {
+    @include retina-sprite($icons, $icons2, ico-badge);
+  }
+
+  .ico-mail {
+    font-size: 10px;
+  }
+
+  .ico-baggage-office, .ico-rental-car, .ico-g2 {
+    font-size: 9px;
+  }
+
+  .ico-ticket-counter, .ico-gate, .ico-bar, .ico-shop, .ico-food, .ico-coffee, .ico-baggage {
+    text-align: center;
+    text-transform: uppercase;
+    width: 30px;
+    height: 20px;
+    @include border-radius(20px);
+  }
+
+  .ico-ticket-counter {
+    background: #eb2e2e;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .ico-gate {
+    background: #3cbe2b;
+  }
+
+  .ico-baggage {
+    background: #d43131;
+  }
+
+  .ico-food {
+    background: #fff;
+    color: #f56544;
+    font-size: 13px;
+  }
+
+  .ico-coffee {
+    background: #77665e;
+  }
+
+  .ico-bar, .ico-shop, .ico-food {
+    line-height: 1.95;
+  }
+
+  .ico-gate, .ico-baggage {
+    line-height: 1.4;
+  }
+
+  .ico-empty {
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: #353335;
+  }
+
+  .elements {
+
+    &.active .ico:after, .ico.active:after {
+      z-index: 2;
+      @include animation(anim 1s infinite linear);
+      @include pseudo-block($top: 50%, $left: 50%);
+      @include transform(translate(-50%, -50%));
+      width: 1px;
+      height: 1px;
+      @include border-radius(50%);
+      background: transparent;
+      border: 20px solid transparent;
+    }
+
+    a.ico {
+      cursor: pointer;
+    }
+
+    .actions {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      background: #fff;
+      width: 54px;
+      padding: 8px 0 2px;
+      @include translate(-50%, 8px);
+      display: none;
+      @include transition(opacity 0.2s, visibility 0.2s, transform 0.2s);
+      text-align: center;
+      font-size: 14px;
+
+      &:before {
+        @include pseudo-block($bottom: 100%, $left: 50%);
+        @include translateX(-50%);
+        border-left: 9px solid transparent;
+        border-right: 9px solid transparent;
+        border-bottom: 10px solid #fff;
+      }
+
+      a {
+        display: inline-block;
+        margin-right: 4px;
+        @include transition(opacity .2s);
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &:hover {
+          opacity: .7;
+        }
+      }
+
+      .ss-write {
+        color: #1db353;
+      }
+
+      .ss-trash {
+        color: #cc2027;
+      }
+    }
+
+    .ico {
+      cursor: default;
+
+      .tablet &, .mobile & {
+        cursor: pointer;
+      }
+
+      &[data-url] {
+        cursor: pointer;
+      }
+    }
+  }
+}

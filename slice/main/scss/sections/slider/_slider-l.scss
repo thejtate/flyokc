@@ -1,0 +1,23 @@
+.section-slider {
+  height: 500px;
+
+  @media (min-width: 1500px) {
+    height: 650px;
+  }
+
+  &.flexslider .slides {
+    height: 100%;
+
+    li {
+      height: 100%;
+    }
+
+    img {
+      width: 100%;
+      position: relative;
+      left: 50%;
+      top: 50%;
+      @include transform(translate(-50%, -50%));
+    }
+  }
+}

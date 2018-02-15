@@ -1,0 +1,292 @@
+<?php
+/**
+ * @file
+ * Map
+ */
+
+define('WRWA_MAP_PATH', 'map');
+define('WRWA_MAP_UPPER_POSITION_MAX_NUMBER', 65);
+define('WRWA_MAP_LOWER_POSITION_MAX_NUMBER', 40);
+define('WRWA_MAP_PARKING_POSITION_MAX_NUMBER', 3);
+define('WRWA_MAP_NID', 286);
+
+/**
+ * Implements hook_theme().
+ */
+function wrwa_map_theme() {
+  $return = array();
+
+  $return['wrwa_map_page'] = array(
+    'variables' => array(
+      'theme_path' => base_path() . path_to_theme(),
+      'elements' => array(),
+      'elements_data' => array(),
+      'gate' => array(),
+      'baggage' => array(),
+      'add_access' => FALSE,
+    ),
+    'template' => '/templates/wrwa-map-page'
+  );
+  $return['wrwa_map_element'] = array(
+    'variables' => array(
+      'info' => NULL,
+    ),
+    'template' => '/templates/wrwa-map-element',
+  );
+
+  return $return;
+}
+
+
+function wrwa_map_preprocess_node(&$vars) {
+  if($vars['nid'] == WRWA_MAP_NID) {
+    $vars['content']['map'] = array(
+      '#weight' => 10,
+      '#markup' => wrwa_map_page(),
+    );
+  }
+}
+
+/**
+ * Page callback.
+ */
+function wrwa_map_page() {
+  module_load_include('inc', 'wrwa_map', 'includes/wrwa_map.helpers');
+  $results = wrwa_map_views_retrieve('map', 'attachment_1');
+
+  //structure $map_elements[level]['types'][type] = [nids_array];
+  $elements = array(
+    'upper' => array(
+      'empty_positions' => drupal_map_assoc(range(1, WRWA_MAP_UPPER_POSITION_MAX_NUMBER)),
+      'types' => array(),
+    ),
+    'lower' => array(
+      'empty_positions' => drupal_map_assoc(range(1, WRWA_MAP_LOWER_POSITION_MAX_NUMBER)),
+      'types' => array()
+  ),
+    'parking' => array(
+      'empty_positions' => drupal_map_assoc(range(1, WRWA_MAP_PARKING_POSITION_MAX_NUMBER)),
+      'types' => array()
+    ),
+  );
+
+  $elements_data = array();
+  $gates = array();
+  $baggage = array();
+
+  foreach ($results as $element) {
+    list($level, $position) = wrwa_map_get_position($element->position);
+    $element->level = $level;
+
+    $element = wrwa_map_element_prepare_params($element);
+
+    $elements[$level]['types'][$element->type][] = $element->nid;
+
+    if(isset($elements[$level]['empty_positions'][$position])) {
+      unset($elements[$level]['empty_positions'][$position]);
+    }
+    $elements_data[$element->nid] = $element;
+    $elements_data[$element->nid]->element_html = theme('wrwa_map_element', array('element' => $element));
+
+    switch($element->type) {
+      case 'gate':
+        if(!empty($element->airline)) {
+          $airline_code = !empty($element->airline_code) ? " ({$element->airline_code})" : '';
+          $gates[$element->airline . $airline_code][] = $element->nid;
+        }
+        break;
+      case 'baggage':
+        $baggage[$element->icon_text] = $element->nid;
+        break;
+    }
+  }
+
+  ksort($baggage);
+  ksort($gates);
+
+  return theme(
+    'wrwa_map_page',
+    array(
+      'elements' => $elements,
+      'elements_data' => $elements_data,
+      'theme_path' => base_path() . path_to_theme(),
+      'gates' => $gates,
+      'baggage' => $baggage,
+      'add_access' => user_access('create map_object content'),
+    )
+  );
+}
+
+/**
+ * Prepare Element template variables
+ */
+function wrwa_map_element_prepare_params($element) {
+  $element->classes = array('ico', 'ico-' . $element->type, 'position-' . $element->position);
+  $element->role = $element->type;
+
+  switch($element->type) {
+    case 'atm':
+      break;
+    case 'baggage':
+      $element->role .=  '-' . $element->icon_text;
+      break;
+    case 'baggage-office':
+      break;
+    case 'bar':
+      $element->classes[] = 'ss-icon';
+      $element->classes[] = 'ss-glyphish-filled';
+      $element->classes[] = 'ss-cocktail';
+      break;
+    case 'cashier':
+      break;
+    case 'coffee':
+      break;
+    case 'elevator':
+      break;
+    case 'escalator':
+      break;
+    case 'food':
+      $element->classes[] = 'ss-icon';
+      $element->classes[] = 'ss-glyphish-filled';
+      $element->classes[] = 'ss-utensils';
+      break;
+    case 'gate':
+      $element->role .=  '-' . $element->icon_text;
+      break;
+    case 'information':
+      break;
+    case 'mail':
+      $element->classes[] = 'ss-icon';
+      $element->classes[] = 'ss-glyphish-filled';
+      $element->classes[] = 'ss-mail';
+      break;
+    case 'pet-area':
+      break;
+    case 'phone':
+      break;
+    case 'restroom':
+      break;
+    case 'security':
+      break;
+    case 'shoe':
+      break;
+    case 'shop':
+      $element->classes[] = 'ss-icon';
+      $element->classes[] = 'ss-glyphish-filled';
+      $element->classes[] = 'ss-shoppingbag';
+      break;
+    case 'ticket-counter':
+      break;
+    case 'vending':
+      break;
+    case 'ymca':
+      $element->classes[] = 'ico-ticket-counter';
+      break;
+  }
+
+  $links_options = array(
+    'query' => array(
+      'destination' => wrwa_map_link_destination(
+        $element->level
+      )
+    )
+  );
+
+  $element->edit_url = user_access('edit any map_object content') ? url('node/' . $element->nid . '/edit', $links_options) : '';
+  $element->delete_url = user_access('delete any map_object content') ? url('node/' . $element->nid . '/delete', $links_options) : '';
+
+  $element->classes = implode(' ', $element->classes);
+
+  return $element;
+}
+
+/**
+ * Convert position string 'u-12' to array('upper', 12);
+ */
+function wrwa_map_get_position($pos_string) {
+  list($level_code, $pos) = explode('-', $pos_string);
+
+  $level_names = array('u' => 'upper', 'l' => 'lower', 'p' => 'parking');
+  $level_name = isset($level_names[$level_code]) ? $level_names[$level_code] : '';
+
+  return array($level_name, $pos);
+}
+
+function wrwa_map_link_destination($level) {
+  $q = drupal_get_destination();
+  return $q['destination'] . '#' .  wrwa_map_level_hash($level);
+}
+
+function wrwa_map_level_hash($level) {
+  return 'el-level-' . $level;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function wrwa_map_form_map_object_node_form_alter(&$form, &$form_state, $form_id) {
+
+  if(empty($form['nid']['#value'])) {
+    if(!empty($_GET['position'])) {
+      $position = check_plain((string) $_GET['position']);
+      $form['field_map_obj_position'][LANGUAGE_NONE][0]['value']['#default_value'] = $position;
+    } else {
+      drupal_goto(WRWA_MAP_PATH);
+    }
+  }
+  $form['field_map_obj_position'][LANGUAGE_NONE][0]['value']['#access'] = FALSE;
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function wrwa_map_node_view($node, $view_mode, $langcode) {
+
+  if($node->type == 'map_object' && $view_mode == 'full' && !empty($node->field_map_obj_position[LANGUAGE_NONE][0]['value'])) {
+    list($level, $position) = wrwa_map_get_position($node->field_map_obj_position[LANGUAGE_NONE][0]['value']);
+    drupal_goto(WRWA_MAP_PATH, array('fragment' => wrwa_map_level_hash($level)));
+  }
+}
+
+/**
+ * Implements hook_node_validate().
+ */
+function wrwa_map_node_validate($node, $form, &$form_state) {
+
+  if($node->type == 'map_object') {
+
+    //check unique element position
+    $fvalues = field_get_items('node', $node, 'field_map_obj_position');
+
+    if(!empty($fvalues[0]['value'])) {
+      $q = new EntityFieldQuery();
+      $q->entityCondition('entity_type', 'node');
+      $q->entityCondition('bundle', 'map_object');
+      if(!empty($node->nid)) {
+        $q->entityCondition('entity_id', $node->nid, '<>');
+      }
+      $q->fieldCondition('field_map_obj_position', 'value', $fvalues[0]['value']);
+
+      $result = $q->execute();
+
+      if(!empty($result)) {
+        reset($result['node']);
+        $nid = key($result['node']);
+
+        form_set_error(
+          'field_map_obj_position',
+          t(
+            'Element for this position is already exist, you can edit it !here',
+            array(
+              '!here' => l(
+                'here',
+                'node/' . $nid . '/edit',
+                array('attributes' => array('target' => 'blank'))
+              )
+            )
+          )
+        );
+      }
+    }
+  }
+}

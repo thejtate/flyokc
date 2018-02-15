@@ -1,0 +1,355 @@
+body:not(.resizing) .b-map .navigation-control {
+
+  .level-control {
+    @include transition(visibility .4s, opacity .4s);
+  }
+
+  .level-nav {
+
+    @media (min-width: $width-map-small) {
+      @include transition(visibility .4s, opacity .4s);
+    }
+
+    .desktop & {
+      @include transition(visibility .4s, opacity .4s);
+    }
+  }
+
+  .icon-compass {
+    @include transition(transform .6s);
+  }
+}
+
+.b-map .navigation-control {
+  font-size: 14px;
+  height: 86px;
+  position: relative;
+  z-index: 2;
+  @include backface-visibility(hidden);
+  margin-bottom: 60px;
+
+  .desktop & {
+    margin-bottom: 175px;
+  }
+
+  .level-control {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    left: 0;
+    @include translate(0, -50%);
+    right: 0;
+    top: 50%;
+    height: 38px;
+
+    @media (min-width: $width-map-small) {
+      height: auto;
+    }
+
+    .desktop & {
+      right: 223px;
+      height: auto;
+    }
+  }
+
+  .level-upper-control {
+
+    .level-map-is-active &, .level-upper-is-active &, .level-lower-is-active &, .level-car-rental-is-active & {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .levels-nav, .level-nav {
+
+      @media (min-width: $width-map-small) {
+        width: 680px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .desktop & {
+        width: 680px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    h3 {
+
+      .desktop &, .level-map-is-active & {
+        display: none;
+      }
+
+      @media (min-width: $width-map-small) {
+        display: none;
+      }
+    }
+  }
+
+  .level-parking-control {
+
+    .level-parking-is-active &, .level-parking-map-is-active & {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .levels-nav {
+
+      @media (min-width: $width-map-small) {
+        width: 380px;
+        float: right;
+        margin-right: 154px;
+      }
+
+      .desktop & {
+        width: 380px;
+        float: right;
+        margin-right: 154px;
+      }
+    }
+
+    //li:first-child {
+    //
+    //  .tablet &, .mobile & {
+    //    display: none;
+    //  }
+    //}
+  }
+
+  .levels-nav, .level-nav {
+
+    ul {
+      padding: 0;
+      margin: 0;
+
+      @media (min-width: $width-map-small) {
+        width: 100%;
+        display: table;
+        margin: 0 auto;
+      }
+
+      .desktop & {
+        width: 100%;
+        display: table;
+        margin: 0 auto;
+      }
+    }
+
+    li {
+      text-align: center;
+      margin: 0;
+
+      @media (min-width: $width-map-small) {
+        display: table-cell;
+        vertical-align: middle;
+      }
+
+      .desktop & {
+        display: table-cell;
+        vertical-align: middle;
+      }
+    }
+
+    a {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      @include transition(box-shadow .3s);
+
+      &.active, &:hover {
+        @include box-shadow(inset 0px 0px 120px -20px rgba(0, 0, 0, .4));
+      }
+    }
+  }
+
+  .btn-nav-level, .btn-sidebar {
+    position: absolute;
+    display: block;
+    padding: 10px 16px;
+    color: #fff;
+    @include box-shadow(inset 0px 0px 120px -20px rgba(0, 0, 0, .4), 0 0 12px 0 rgba(0, 0, 0, .6));
+    font-weight: bold;
+    text-decoration: none;
+    z-index: 2;
+
+    .desktop & {
+      display: none;
+    }
+  }
+
+  .btn-nav-level {
+    background: #7b519c;
+    left: 0;
+    top: 50%;
+    @include translate(0, -50%);
+
+    @media (min-width: $width-map-small) {
+      display: none;
+    }
+  }
+
+  .btn-sidebar {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    background: #202020;
+
+    .level-car-rental-is-active &, .level-parking-is-active &, .level-map-is-active & {
+      display: none;
+    }
+  }
+
+  .levels-nav {
+    background: #7b519c;
+    position: absolute;
+    right: 100%;
+    top: calc(100% + 8px);
+    @include transition(transform .6s);
+    width: 190px;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, .6);
+
+    @media (min-width: $width-map-small) {
+      box-shadow: none;
+      position: static;
+      @include transition(transform 0s);
+      width: auto;
+    }
+
+    .desktop & {
+      box-shadow: none;
+      position: static;
+      @include transition(transform 0s);
+      width: auto;
+    }
+
+    .active-mobile-nav & {
+      @include translate(100%, 0);
+
+      @media (min-width: $width-map-small) {
+        @include translate(0, 0);
+      }
+
+      .desktop & {
+        @include translate(0, 0);
+      }
+    }
+
+    a {
+      padding: 10px 16px;
+
+      @media (min-width: $width-map-small) {
+        padding: 15px 10px;
+      }
+
+      .desktop & {
+        padding: 15px 10px;
+      }
+
+      &.active {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .level-nav {
+    margin-top: 8px;
+    background: #ff8400;
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+
+    .desktop & {
+      display: block;
+    }
+
+    .level-upper-is-active & {
+
+      @media (min-width: $width-map-small) {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .desktop & {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    a {
+      padding: 6px 8px;
+    }
+
+    .ico {
+      font-size: 13px;
+      position: relative;
+      margin-right: 8px;
+      line-height: 1.7;
+      display: inline-block;
+      vertical-align: top;
+      background: none;
+    }
+
+    .ico-restroom:before {
+      @include retina-sprite($icons, $icons2, icon-restroom);
+    }
+
+    .ico-coffee:before {
+      @include retina-sprite($icons, $icons2, icon-coffee-a);
+    }
+
+    .ico-shoe:before {
+      @include retina-sprite($icons, $icons2, icon-shoe-a);
+    }
+  }
+
+  h3 {
+    font-family: $klavika-light;
+    color: #fff;
+    text-transform: uppercase;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    right: 0;
+    padding-left: 30px;
+    @include translate(0, -50%);
+    font-size: 22px;
+    text-align: center;
+
+    @media (min-width: $width-map-small) {
+      left: 154px;
+      right: auto;
+      font-size: 36px;
+    }
+
+    .desktop & {
+      left: 154px;
+      right: auto;
+      font-size: 36px;
+    }
+  }
+
+  .icon-compass {
+    position: absolute;
+    top: 50%;
+    @include translate(50%, -50%);
+    width: 41px;
+    right: 50px;
+
+    .desktop & {
+      right: 80px;
+    }
+
+    .level-map-is-active & {
+      @include transform(translate(50%, -50%) rotate(180deg));
+    }
+
+    .level-car-rental-is-active & {
+      @include transform(translate(50%, -50%) rotate(-90deg));
+    }
+  }
+
+  .ico-ticket-counter, .ico-gate, .ico-bar, .ico-shop, .ico-food, .ico-coffee, .ico-baggage {
+    width: 16px;
+    height: 16px;
+  }
+}

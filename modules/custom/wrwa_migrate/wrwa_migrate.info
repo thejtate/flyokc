@@ -1,0 +1,9 @@
+name = wrwa_migrate
+description = wrwa_migrate
+package = custom
+core = 7.x
+version = 7.x-1.x
+interface translation project = FALSE
+
+;files[] =
+;dependencies[] = 

@@ -1,0 +1,535 @@
+<?xml version="1.0"?>
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <img id="map" src="img/map/floor1/map.png" />
+    <img id="shadow" src="img/map/floor1/shadow.png" />
+    <img id="label" src="img/map/floor1/label.png" />
+    <legend>
+        <map>
+            <item mapid="9474114b-55ac-498b-b927-fc976fcbb2fe" id="1">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i1" src="img/icons/ico1.png" />
+                <ico src="img/icons/ico1_legend.png" />
+                <label>BAGGAGE CLAIM</label>
+            </item>
+            <item mapid="70dc094c-870d-4759-8505-f8b30d76a202" id="2">
+                <clazz>AdvLocation</clazz>
+                <map_ico/>
+                <ico src="img/icons/ico20.png" />
+                <label>BAGGAGE OFFICES</label>
+            </item>
+            <item mapid="5bd244a1-39cd-438d-9178-940188d158ea" id="3">
+                <clazz>AdvLocation</clazz>
+                <map_ico />
+                <ico src="img/icons/ico21.png" />
+                <label>RENTAL CAR COUNTER</label>
+            </item>
+            <item mapid="7e039d66-102a-4cc7-a6ae-ccd9e8cfa16f" id="4">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i5" />
+                <ico src="img/icons/ico5.png" />
+                <label>ESCALATOR</label>
+            </item>
+            <item mapid="e80e10b6-f234-4f2d-9add-e13f695ceb99" id="5">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i3" />
+                <ico src="img/icons/ico3.png" />
+                <label>RESTROOMS</label>
+            </item>
+            <item mapid="6222430d-62aa-4a2c-9d13-484b02312bca" id="6">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i2" />
+                <ico src="img/icons/ico2.png" />
+                <label>VENDING</label>
+            </item>
+            <item mapid="8264e17c-8062-4db7-9b42-0c0194231cd4" id="7">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i4" />
+                <ico src="img/icons/ico4.png" />
+                <label>ELEVATOR</label>
+            </item>
+            <item mapid="b73039fb-f79d-45f9-9bfb-50f0af354068" id="8">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i7" />
+                <ico src="img/icons/ico7.png" />
+                <label>PHONES</label>
+            </item>
+            <item mapid="f35717a0-1c42-47bd-9bf1-f579f675e601" id="9">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i10" />
+                <ico src="img/icons/ico10.png" />
+                <label>PET RELIEF AREA</label>
+            </item>
+            <item mapid="ae5b5e2b-8c8d-495e-a476-95d8dabc0d47" id="10">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i8" />
+                <ico src="img/icons/ico8.png" />
+                <label>U.S. MAIL BOX</label>
+            </item>
+            <item mapid="4e7cc3c3-08e4-4445-8a7b-c60508ce3201" id="11">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i6" />
+                <ico src="img/icons/ico6.png" />
+                <label>INFORMATION</label>
+            </item>
+            <!--item mapid="8f41959b-4928-4856-8373-d236bd682efc" id="12">
+              <clazz>AdvLocation</clazz>
+              <map_ico clazz="i19" />
+              <ico src="img/icons/ico19.png" />
+              <label>YMCA</label>
+            </item-->
+        </map>
+        <rental>
+            <!--
+              <item id="4cbc4d22-55d7-47fd-a8af-27777a682c25" legend_id="3">
+                <name>Dollar</name>
+                <label>1</label>
+              </item>
+              <item id="1f643fcf-70bc-4c41-ae3b-f597764e9a4c" legend_id="3">
+                <name>Alamo</name>
+                <label>2</label>
+              </item>
+              <item id="f8ccaae7-f8c6-4f53-9906-42598993e09d" legend_id="3">
+                <name>Avis</name>
+                <label>3</label>
+              </item>
+              <item id="44772837-a01b-47a8-926d-3d9e878e5719" legend_id="3">
+                <name>Hertz</name>
+                <label>4</label>
+              </item>
+              <item id="eed110ec-9750-465b-be48-732928e7a15c" legend_id="3">
+                <name>Enterprise</name>
+                <label>5</label>
+              </item>
+              <item id="0c62e6d9-4399-4d4b-bde2-018f8216dd2d" legend_id="3">
+                <name>Budget</name>
+                <label>6</label>
+              </item>
+              <item id="c78ba21b-ae6a-4712-b73d-6fec49eba3ce" legend_id="3">
+                <name>National</name>
+                <label>7</label>
+              </item>
+              <item id="e41f930b-e5fa-46ae-afa7-3f0e4ce516bc" legend_id="3">
+                <name>Thrifty</name>
+                <label>8</label>
+              </item>
+            -->
+        </rental>
+        <carousels>
+            <item id="a13a6027-71cb-4378-abbe-901c2fb59b12" legend_id="1">
+                <name>Delta</name>
+                <acro>DL</acro>
+                <label>1</label>
+            </item>
+            <item id="4c24d82c-9020-4bc3-a8e4-f7e5da8134ab" legend_id="1">
+                <name>Southwest</name>
+                <acro>WN</acro>
+                <label>2</label>
+            </item>
+            <item id="de4bafb4-1bfe-4315-aebb-1aebfadcca94" legend_id="1">
+                <name>Allegiant</name>
+                <acro>G4</acro>
+                <label>3</label>
+            </item>
+            <item id="24de3cd0-a61f-4397-9d5e-6bf0d3a667f0" legend_id="1">
+                <name>American</name>
+                <acro>AA</acro>
+                <label>4</label>
+            </item>
+            <item id="a7b08e11-af88-48da-abef-56908e7fe5b4" legend_id="1">
+                <name>Alaska / United</name>
+                <acro>AS / UA</acro>
+                <label>5</label>
+            </item>
+            <item id="a8474fa5-37a5-4094-abd8-cea4211c2dc3" legend_id="1">
+                <name>United</name>
+                <acro>UA</acro>
+                <label>6</label>
+            </item>
+        </carousels>
+        <gates />
+    </legend>
+    <locations>
+        <location id="72af12b6-d854-4bd8-a1ba-fa2162efb979">
+            <x>22</x>
+            <y>197</y>
+            <caption>BAGGAGE CLAIM 1</caption>
+            <description>Delta Air Lines</description>
+            <scale>2</scale>
+            <legend id="1" />
+            <label>1</label>
+            <font family="Klavika Basic Bold" size="22" />
+        </location>
+        <location id="6f90ee0e-ad5f-4de5-b4d3-9bdac1dd02f1">
+            <x>161</x>
+            <y>88</y>
+            <caption>BAGGAGE CLAIM 2</caption>
+            <description>Southwest Airlines</description>
+            <scale>2</scale>
+            <legend id="1" />
+            <label>2</label>
+            <font family="Klavika Basic Bold" size="22" />
+        </location>
+        <location id="575e31f7-c919-4d55-82ac-cbd221571dea">
+            <x>230</x>
+            <y>53</y>
+            <caption>BAGGAGE CLAIM 3</caption>
+            <description>Allegiant Air</description>
+            <scale>2</scale>
+            <legend id="1" />
+            <label>3</label>
+            <font family="Klavika Basic Bold" size="22" />
+        </location>
+        <location id="f5963c19-c4b5-4992-8c0a-382bc0a73fc4">
+            <x>306</x>
+            <y>28</y>
+            <caption>BAGGAGE CLAIM 4</caption>
+            <description>American Airlines</description>
+            <scale>2</scale>
+            <legend id="1" />
+            <label>4</label>
+            <font family="Klavika Basic Bold" size="22" />
+        </location>
+        <location id="b3be15c5-108f-4184-8afd-f999ce35831e">
+            <x>468</x>
+            <y>-3</y>
+            <caption>BAGGAGE CLAIM 5</caption>
+            <description>Alaska Airlines / United Airlines</description>
+            <scale>2</scale>
+            <legend id="1" />
+            <label>5</label>
+            <font family="Klavika Basic Bold" size="22" />
+        </location>
+        <location id="1d48bae0-a4b7-49e0-8dea-7bc65eaed819">
+            <x>554</x>
+            <y>-7</y>
+            <caption>BAGGAGE CLAIM 6</caption>
+            <description>United Airlines</description>
+            <scale>2</scale>
+            <legend id="1" />
+            <label>6</label>
+            <font family="Klavika Basic Bold" size="22" />
+        </location>
+        <location id="bb63fb6c-c900-460f-80f7-3bc75de50827">
+            <x>99</x>
+            <y>152</y>
+            <caption>DELTA BAGGAGE OFFICE</caption>
+            <description>9:30am - 12:00 midnight </description>
+            <scale>1.2</scale>
+            <legend id="2" />
+            <label>DL</label>
+            <font family="Klavika Basic Bold" size="14" color="0x0a4494" />
+        </location>
+        <location id="ea5477fc-558f-431b-a3d6-cd56ba12900b">
+            <x>267</x>
+            <y>161</y>
+            <caption>SOUTHWEST BAGGAGE OFFICE</caption>
+            <description>Open after each arriving flight.</description>
+            <scale>1.2</scale>
+            <legend id="2" />
+            <label>WN</label>
+            <font family="Klavika Basic Bold" size="14" />
+        </location>
+        <location id="0cbe9de3-3d27-4ba5-a20d-9709e0f8ff01">
+            <x>315</x>
+            <y>139</y>
+            <caption />
+            <description />
+            <scale>1.2</scale>
+            <legend id="2" />
+            <label />
+            <font family="Klavika Basic Bold" size="14" />
+        </location>
+        <location id="9a925a4e-8c6f-40eb-8166-49afb00ce8b1">
+            <x>338</x>
+            <y>131</y>
+            <caption>AMERICAN BAGGAGE OFFICE</caption>
+            <description>Open after each arriving flight.</description>
+            <scale>1.2</scale>
+            <legend id="2" />
+            <label>AA</label>
+            <font family="Klavika Basic Bold" size="14" />
+        </location>
+        <location id="c79285a6-2ab5-42f5-be00-0afe52e5342a">
+            <x>642</x>
+            <y>49</y>
+            <caption>United Baggage Office</caption>
+            <description>Open after each arriving flight.</description>
+            <scale>1.2</scale>
+            <legend id="2" />
+            <label>UA</label>
+            <font family="Klavika Basic Bold" size="14" />
+        </location>
+        <!--
+        <location id="d6d7fb7d-9fb4-497c-bdd9-3d2e3adff876">
+          <x>132</x>
+          <y>254</y>
+          <caption>Dollar Rental Car</caption>
+          <description />
+          <scale>1.5</scale>
+          <legend id="3" />
+          <label>1</label>
+          <font family="Klavika Basic Bold" size="22" />
+        </location>
+        <location id="a9d497d8-8932-40e8-80fd-ff6494c2eb98">
+          <x>149</x>
+          <y>235</y>
+          <caption>Alamo Rental Car</caption>
+          <description />
+          <scale>1.5</scale>
+          <legend id="3" />
+          <label>2</label>
+          <font family="Klavika Basic Bold" size="22" />
+        </location>
+        <location id="04dbdb40-fe91-410a-84f0-6e8bd7baaca5">
+          <x>204</x>
+          <y>191</y>
+          <caption>Avis Rental Car</caption>
+          <description />
+          <scale>1.5</scale>
+          <legend id="3" />
+          <label>3</label>
+          <font family="Klavika Basic Bold" size="22" />
+        </location>
+        <location id="ebc8f7d2-fbfd-4cbe-ba86-7ad5d7d9c818">
+          <x>380</x>
+          <y>113</y>
+          <caption>Hertz Rental Car</caption>
+          <description />
+          <scale>1.5</scale>
+          <legend id="3" />
+          <label>4</label>
+          <font family="Klavika Basic Bold" size="22" />
+        </location>
+        <location id="64d63027-0afb-47bb-8f8d-cc9e374770c5">
+          <x>461</x>
+          <y>97</y>
+          <caption>Enterprise Rental Car</caption>
+          <description />
+          <scale>1.5</scale>
+          <legend id="3" />
+          <label>5</label>
+          <font family="Klavika Basic Bold" size="22" />
+        </location>
+        <location id="a2d5ff77-fd44-4435-9c48-8d7a13350f48">
+          <x>493</x>
+          <y>94</y>
+          <caption>Budget Rental Car</caption>
+          <description />
+          <scale>1.5</scale>
+          <legend id="3" />
+          <label>6</label>
+          <font family="Klavika Basic Bold" size="22" />
+        </location>
+        <location id="f776c94e-cdd3-415a-905d-a9a7bfbc43c6">
+          <x>565</x>
+          <y>92</y>
+          <caption>National Rental Car</caption>
+          <description />
+          <scale>1.5</scale>
+          <legend id="3" />
+          <label>7</label>
+          <font family="Klavika Basic Bold" size="22" />
+        </location>
+        <location id="807afdc2-eef5-4506-b886-1d968bee7876">
+          <x>596</x>
+          <y>92</y>
+          <caption>Thrifty Rental Car</caption>
+          <description />
+          <scale>1.5</scale>
+          <legend id="3" />
+          <label>8</label>
+          <font family="Klavika Basic Bold" size="22" />
+        </location>
+        -->
+        <location id="01520bbc-662a-468f-abb6-0fe4ed5748f0">
+            <x>107</x>
+            <y>176</y>
+            <caption>Escalator/Stairs</caption>
+            <description>Escalator/Stairs connecting first and second levels.</description>
+            <scale>2</scale>
+            <legend id="4" />
+            <label>Escalator/Stairs</label>
+            <font />
+        </location>
+        <location id="d8889d8e-2606-4338-8c67-3d7fc7e75f0d">
+            <x>232</x>
+            <y>150</y>
+            <caption>Escalator/Stairs</caption>
+            <description>Escalator/Stairs connecting first and second levels</description>
+            <scale>2</scale>
+            <legend id="4" />
+            <label>Escalator/Stairs</label>
+            <font />
+        </location>
+        <location id="00c6fb9f-2e23-46ee-90c9-50516b8430c9">
+            <x>284</x>
+            <y>144</y>
+            <caption>Escalator/Stairs</caption>
+            <description>Escalator/Stairs connecting parking tunnel and baggage claim level.</description>
+            <scale>2</scale>
+            <legend id="4" />
+            <label>Escalator/Stairs Center</label>
+            <font />
+        </location>
+        <location id="f6e56d75-876a-407d-99ab-294307ad0e24">
+            <x>346</x>
+            <y>91</y>
+            <caption>Escalator/Stairs</caption>
+            <description>Escalators/Stairs connecting first and second levels. </description>
+            <scale>2</scale>
+            <legend id="4" />
+            <label>Escalator/Stairs</label>
+            <font />
+        </location>
+        <location id="911ac44f-715c-4ec2-a253-84700aeb75f1">
+            <x>409</x>
+            <y>63</y>
+            <caption>Escalator/Stairs</caption>
+            <description>Escalators/Stairs connecting first and second levels. </description>
+            <scale>2</scale>
+            <legend id="4" />
+            <label>Escalator/Stairs</label>
+            <font />
+        </location>
+        <location id="b9969d20-aa6b-4696-b487-edfe5b4bb064">
+            <x>428</x>
+            <y>38</y>
+            <caption>Public Restrooms</caption>
+            <description>Men's &amp; Women's Restrooms.  A family restroom is located in between the two.</description>
+            <scale>2</scale>
+            <legend id="5" />
+            <label>Public Restrooms</label>
+            <font />
+        </location>
+        <location id="b4203694-d1b1-4dd7-a257-c0384f4092ff">
+            <x>145</x>
+            <y>151</y>
+            <caption>Public Restrooms</caption>
+            <description>Men's &amp; Women's Restrooms.  A family restroom is located in between the two.</description>
+            <scale>2</scale>
+            <legend id="5" />
+            <label>Public Restrooms</label>
+            <font />
+        </location>
+        <location id="746bb527-bf96-4735-99bf-876e857c2dd1">
+            <x>82</x>
+            <y>245</y>
+            <caption>Vending</caption>
+            <description />
+            <scale>2</scale>
+            <legend id="6" />
+            <label>Vending</label>
+            <font />
+        </location>
+        <location id="56357e84-f9ca-432a-838c-c5a17f5fcc09">
+            <x>615</x>
+            <y>18</y>
+            <caption>Vending</caption>
+            <description />
+            <scale>2</scale>
+            <legend id="6" />
+            <label>Vending</label>
+            <font />
+        </location>
+        <location id="74da9a4e-8037-4fc3-8874-e749ebe2b943">
+            <x>133</x>
+            <y>175</y>
+            <caption>Elevator</caption>
+            <description>Freight elevator to all levels.</description>
+            <scale>2</scale>
+            <legend id="7" />
+            <label>Elevator Freight</label>
+            <font />
+        </location>
+        <location id="929af72d-25cc-419f-a282-30cd6840985d">
+            <x>355</x>
+            <y>36</y>
+            <caption>Elevator</caption>
+            <description>Elevator to baggage claim, ticketing and gates, and administrative offices.</description>
+            <scale>2</scale>
+            <legend id="7" />
+            <label>Elevator West</label>
+            <font />
+        </location>
+        <location id="fa252024-39d5-49be-8b53-23dd38aa21d1">
+            <x>269</x>
+            <y>120</y>
+            <caption>Elevator</caption>
+            <description>Elevator to parking tunnel, baggage claim, and ticketing and gates .</description>
+            <scale>2</scale>
+            <legend id="7" />
+            <label>Elevator Center</label>
+            <font />
+        </location>
+        <location id="99326c0b-001a-4a43-acc6-4e3bc44195e3">
+            <x>319</x>
+            <y>104</y>
+            <caption>Pay Phone</caption>
+            <description />
+            <scale>2</scale>
+            <legend id="8" />
+            <label>Phone</label>
+            <font />
+        </location>
+        <location id="b3979e22-47f5-46cf-a291-1d92696c4495">
+            <x>401</x>
+            <y>40</y>
+            <caption>Pay Phone</caption>
+            <description />
+            <scale>2</scale>
+            <legend id="8" />
+            <label>Phone</label>
+            <font />
+        </location>
+        <location id="28aa8331-3624-4abe-9d5a-08db66a528e9">
+            <x>109</x>
+            <y>315</y>
+            <caption>Animal Relief Area</caption>
+            <description>The Pet Relief Area is located just steps out the front exit door at Baggage Claim 1. The area is easily identifiable by the white picket fence. </description>
+            <scale>2</scale>
+            <legend id="9" />
+            <label>Animal Relief Area</label>
+            <font />
+        </location>
+        <location id="29165922-09c0-4e7a-bfba-7d9672ed2dd9">
+            <x>380</x>
+            <y>21</y>
+            <caption>U.S. Mail Box</caption>
+            <description />
+            <scale>2</scale>
+            <legend id="10" />
+            <label>U.S. Mail Box</label>
+            <font />
+        </location>
+        <location id="4c0d04ac-140b-4755-856a-f107bc532468">
+            <x>293</x>
+            <y>114</y>
+            <caption>Information &amp; Paging</caption>
+            <description />
+            <scale>2</scale>
+            <legend id="11" />
+            <label>Traveler's Aid</label>
+            <font />
+        </location>
+        <!--location id="980ada42-ed6e-449e-bb27-4c9c10b3eb58">
+          <x>-41</x>
+          <y>302</y>
+          <caption>YMCA Military Welcome Center</caption>
+          <description>The Military Welcome Center (MWC) is located in Bay O of the cargo annex, just 130 yards outside the side exit by Baggage Claim 1</description>
+          <scale>2</scale>
+          <legend id="12" />
+          <label>YMCA Military Welcome Center</label>
+          <font />
+        </location-->
+        <location id="980ada42-ed6a-449d-bb27-4c9c10b3eb58">
+            <x>57</x>
+            <y>184</y>
+            <caption>Elevator</caption>
+            <description>Elevator to all levels.</description>
+            <scale>2</scale>
+            <legend id="7" />
+            <label>Elevator</label>
+            <font />
+        </location>
+    </locations>
+</data>

@@ -1,0 +1,48 @@
+.page-arrivals {
+
+  .content-wrapper {
+    padding-bottom: 30px;
+
+    .filter-items {
+      margin-bottom: 40px;
+
+      .form-type-select {
+        margin: 0 0 20px;
+      }
+    }
+
+    .view-type {
+      display: none;
+    }
+
+    .tags {
+      margin: 0 0 13px;
+    }
+
+    .items {
+      margin: 0;
+    }
+
+    .item {
+      max-width: none;
+      width: 100%;
+      margin: 0 0 20px;
+
+      .desc {
+        width: 100%;
+
+        .img img {
+          max-width: 140px;
+        }
+
+        .left-part {
+          width: 60%;
+        }
+
+        .right-part {
+          width: 40%;
+        }
+      }
+    }
+  }
+}

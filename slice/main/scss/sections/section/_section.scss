@@ -1,0 +1,13 @@
+.section-wrapper {
+  position: relative;
+
+  &.section-desc.full-block {
+    position: absolute;
+    background: none;
+    z-index: 2;
+
+    .site-container {
+      background: #f66932;
+    }
+  }
+}

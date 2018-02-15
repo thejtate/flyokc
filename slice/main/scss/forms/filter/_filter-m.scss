@@ -1,0 +1,25 @@
+.form-filter {
+  margin-bottom: 30px;
+
+  .form-item-number {
+    margin-right: 5px;
+    width: 594px;
+  }
+
+  .form-type-select, .form-type-text {
+    margin-right: 5px;
+    margin-bottom: 10px;
+
+    &:nth-child(2) {
+      margin-right: 0;
+    }
+
+    .form-item {
+      margin: 0;
+    }
+  }
+
+  .select2-container--default .select2-selection--single, .form-type-text {
+    width: 358px;
+  }
+}

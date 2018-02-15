@@ -1,0 +1,8 @@
+name = WRWA custom
+description = WRWA custom
+package = wrwa
+core = 7.x
+version = 7.x-1.x
+
+;files[] =
+;dependencies[] = 

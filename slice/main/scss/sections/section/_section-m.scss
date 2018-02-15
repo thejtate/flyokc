@@ -1,0 +1,15 @@
+.section-wrapper {
+
+  &.section-desc.full-block {
+    height: 110px;
+    top: 325px;
+
+    .site-container {
+      padding: 0 35px;
+
+      .right-part {
+        font-size: 12px;
+      }
+    }
+  }
+}

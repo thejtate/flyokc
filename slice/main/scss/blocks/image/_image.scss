@@ -1,0 +1,19 @@
+.b-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  max-height: 800px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+  }
+
+  .mobile-img {
+    display: none;
+    height: 295px;
+    overflow: hidden;
+  }
+}

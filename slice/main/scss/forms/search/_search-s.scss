@@ -1,0 +1,109 @@
+.form-search {
+  top: 140px;
+  width: 264px;
+
+  .form-actions {
+    bottom: -10px;
+
+    .form-submit {
+      @include oneline-sprite-box($icons, icon-plane);
+    }
+  }
+
+  .btn-close {
+    background: #009bdf;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -6px;
+    width: 35px;
+    @include border-radius(0 5px 5px 0);
+    display: none;
+
+    &:before {
+      @include pseudo-block($top: 50%, $left: 50%);
+      @include translate(-50%, -50%);
+      @include oneline-sprite-box($icons, close-a)
+    }
+  }
+
+  &.active {
+    width: 274px;
+    margin-left: -3px;
+
+    input:not([type=submit]):not([type=checkbox]):not([type=radio]) {
+      font-size: 12px;
+      background-color: #fff !important;
+      color: #939292 !important;
+      font-family: $klavika-light;
+      font-style: italic;
+      @include border-radius(5px);
+      padding-right: 35px !important;
+    }
+
+    .form-actions {
+      display: none;
+    }
+
+    .btn-close {
+      display: block;
+    }
+  }
+
+  input:not([type=submit]):not([type=checkbox]):not([type=radio]) {
+    font-size: 18px;
+    padding: 10px !important;
+  }
+
+  .ui-autocomplete {
+    padding-top: 5px;
+    background: transparent;
+    @include border-radius(0);
+
+    .show-all + div +.ui-menu-item-first {
+      border-top: 2px solid #fff;
+    }
+
+    .btn-show-all {
+      @include box-shadow(none);
+      font-size: 10px;
+      @include border-radius(7px);
+      top: -29px;
+      right: 43px;
+      padding: 2px 10px;
+    }
+  }
+
+  .search-list {
+
+    .pull-left {
+      font-size: 18px;
+      float: none;
+      text-align: center;
+      display: block;
+    }
+
+    .pull-right {
+      font-size: 12px;
+      float: none;
+      text-align: center;
+      display: block;
+
+      span {
+
+        &:first-child {
+          padding-right: 22px;
+          margin-right: 6px;
+        }
+      }
+    }
+
+    a {
+      @include clearfix();
+      display: block;
+      padding: 10px 20px;
+      @include background-image(linear-gradient(to bottom, #fbb041 0%, #fbb041 50%, #ee9e2b 50%, #ee9e2b 100%));
+      @include transition(all .3s);
+    }
+  }
+}

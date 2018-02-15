@@ -1,0 +1,22 @@
+.page-airport-trust-meeting-agendas {
+
+  .top-image img {
+    height: 190px !important;
+
+    @media (min-width: $width-middle) {
+      height: auto !important;
+    }
+  }
+
+  .content-wrapper {
+
+//    .top-navigation {
+//      margin-bottom: 0;
+//      margin-top: -35px;
+//    }
+
+    .contextual-links-region {
+      position: static;
+    }
+  }
+}

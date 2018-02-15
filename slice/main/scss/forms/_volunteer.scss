@@ -1,0 +1,124 @@
+.form-volunteer {
+
+  h6 {
+    text-transform: none;
+  }
+
+  .col {
+
+    &:first-child {
+
+      @media (min-width: $width-middle) {
+        border-right: 1px solid #d7d7d7;
+        padding-right: 20px;
+      }
+    }
+
+    &:last-child {
+
+      @media (min-width: $width-middle) {
+        padding-left: 20px;
+      }
+    }
+  }
+
+  label {
+    font-size: 18px;
+  }
+
+  input:not([type=submit]):not([type=checkbox]):not([type=radio]), textarea {
+    background: transparent;
+    border: 1px solid #c5c5c5;
+    color: #474747;
+  }
+
+  .select2-container--default .select2-selection--single {
+    font-size: 18px;
+    border: 1px solid #f0f0f0;
+    color: #474747;
+  }
+
+  .select2-container .select2-selection--single .select2-selection__rendered {
+    padding-left: 0;
+  }
+
+  .form-item {
+    margin-bottom: 18px;
+  }
+
+  .field-birthday {
+
+    .form-text, .field-suffix {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .form-text {
+      max-width: 180px;
+      margin-right: 14px;
+    }
+
+    .field-suffix {
+      font-style: italic;
+    }
+  }
+
+  .form-radios, .form-checkboxes {
+    margin-bottom: 30px;
+
+    label {
+      margin-bottom: 10px;
+    }
+
+    .form-item {
+      margin-bottom: 6px;
+
+      label {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    z-index: -1;
+
+    &.error + label {
+
+      &:before {
+        border-color: red;
+      }
+    }
+
+    &:checked, &.error:checked {
+
+      & + label:before {
+        background: #7c4e9e;
+        border: 1px solid #7c4e9e;
+      }
+    }
+
+    & + label {
+      cursor: pointer;
+      position: relative;
+      padding-left: 30px;
+      line-height: 1.2;
+      display: inline-block;
+
+      &:before {
+        @include pseudo-block($left: 0, $top: 1px);
+        background: transparent;
+        width: 19px;
+        height: 19px;
+        border: 1px solid #c5c5c5;
+      }
+    }
+  }
+
+  .btn-wrap {
+    font-family: $klavika-bold;
+  }
+}

@@ -1,0 +1,210 @@
+<?php
+
+/**
+ * @file
+ * WRWA custom functionality.
+ */
+
+define('WRWA_NEWS_ADVISORIES_TID', 13);
+define('WRWA_NEWS_CONSTRUCTION_TID', 14);
+define('WRWA_NEWS_EVENTS_TID', 15);
+define('WRWA_NEWS_PRESS_TID', 16);
+define('WRWA_NEWS_STATISTIC_TID', 17);
+define('WRWA_NEWS_PUBLICATION_TID', 21);
+
+/**
+ * Implements hook_form_views_exposed_form_alter().
+ */
+function wrwa_custom_form_views_exposed_form_alter(&$form, &$form_state) {
+
+  if (($form['#id'] == 'views-exposed-form-news-block') ||
+    ($form['#id'] == 'views-exposed-form-news-page')) {
+    $form['#validate'][] = 'wrwa_custom_news_form_views_exposed_form_validate';
+  }
+  if ($form['#id'] == 'views-exposed-form-airport-trust-meeting-agendas-block-1') {
+    $form['#validate'][] = 'wrwa_custom_agendas_form_views_exposed_form_validate';
+  }
+  if ($form['#id'] == 'views-exposed-form-alerts-block') {
+    $form['#validate'][] = 'wrwa_custom_alerts_form_views_exposed_form_validate';
+  }
+
+}
+
+/**
+ * Validation function for news date exposed filters.
+ *
+ * @param $form
+ * @param $form_state
+ */
+function wrwa_custom_news_form_views_exposed_form_validate(&$form, &$form_state) {
+  $default_year = isset($form['date_filter']['value']['year']['#options']['']) ?
+    $form['date_filter']['value']['year']['#options'][''] : t('-Year');
+
+  $arg = (isset($form_state['view']) && !empty($form_state['view']->args)) ?
+    $form_state['view']->args[0] : '';
+  $tid = '';
+  if ($arg) {
+    $news_term = taxonomy_get_term_by_name($arg, 'news');
+    if ($news_term) {
+      $tid = array_pop($news_term)->tid;
+    }
+  }
+
+  $result_default = _wrwa_custom_get_news_field_date($tid);
+  if ($result_default && is_array($result_default)) {
+    $result_default = _wrwa_custom_normalize($result_default, $default_year);
+    $form['date_filter']['value']['year']['#options'] = $result_default['year'];
+  }
+  else {
+    $form['date_filter']['value']['year']['#options'] = array('' => $default_year,);
+  }
+}
+
+/**
+ * Validation function for news date exposed filters.
+ *
+ * @param $form
+ * @param $form_state
+ */
+function wrwa_custom_agendas_form_views_exposed_form_validate(&$form, &$form_state) {
+  $default_year = isset($form['date_filter']['value']['year']['#options']['']) ?
+    $form['date_filter']['value']['year']['#options'][''] : t('-Year');
+
+  $result_default = _wrwa_custom_get_agendas_field_date();
+  if ($result_default && is_array($result_default)) {
+    $result_default = _wrwa_custom_normalize($result_default, $default_year);
+    $form['date_filter']['value']['year']['#options'] = $result_default['year'];
+  }
+  else {
+    $form['date_filter']['value']['year']['#options'] = array('' => $default_year,);
+  }
+}
+
+/**
+ * Validation function for alerts date exposed filters.
+ *
+ * @param $form
+ * @param $form_state
+ */
+function wrwa_custom_alerts_form_views_exposed_form_validate(&$form, &$form_state) {
+  $default_year = isset($form['date_filter']['value']['year']['#options']['']) ?
+    $form['date_filter']['value']['year']['#options'][''] : t('-Year');
+
+  $result_default = _wrwa_custom_get_news_field_date('', 'alerts');
+  if ($result_default && is_array($result_default)) {
+    $result_default = _wrwa_custom_normalize($result_default, $default_year);
+    $form['date_filter']['value']['year']['#options'] = $result_default['year'];
+  }
+  else {
+    $form['date_filter']['value']['year']['#options'] = array('' => $default_year,);
+  }
+}
+
+/**
+ * Get default date select options.
+ *
+ * @return mixed
+ */
+function _wrwa_custom_get_news_field_date($tid = '', $type = 'news') {
+
+  $query = db_select('field_data_field_projects_date', 'date')
+    ->fields('date', array('field_projects_date_value'));
+  $query->leftJoin('node', 'n', 'n.nid = date.entity_id');
+
+  if (!empty($tid)) {
+    $query->leftJoin('field_data_field_news_taxonomy_term_ref', 'term', 'n.nid = term.entity_id');
+    $query->condition('term.entity_type', 'node');
+    $query->condition('term.field_news_taxonomy_term_ref_tid', $tid);
+  }
+
+  $result = $query->condition('n.type', $type)
+    ->condition('n.status', 1)
+    ->orderBy('date.field_projects_date_value', 'DESC')
+    ->execute()
+    ->fetchCol();
+
+  return $result;
+}
+
+/**
+ * Get default date select options.
+ *
+ * @return mixed
+ */
+function _wrwa_custom_get_agendas_field_date() {
+
+  $query = db_select('field_data_field_atma_date', 'date')
+    ->fields('date', array('field_atma_date_value'));
+  $query->leftJoin('node', 'n', 'n.nid = date.entity_id');
+
+  $result = $query->condition('n.type', 'airport_trust_meeting_agendas')
+    ->condition('n.status', 1)
+    ->execute()
+    ->fetchCol();
+
+  return $result;
+}
+
+/**
+ * Normalize year and month list.
+ *
+ * @param $result
+ * @param $default_year
+ * @param $default_month
+ * @return array
+ */
+function _wrwa_custom_normalize($result, $default_year) {
+  $list = array(
+    'year' => array('' => $default_year,),
+  );
+  foreach ($result as $date) {
+    $date_timestamp = strtotime($date);
+    $year = date('Y', $date_timestamp);
+    $list['year'][$year] = $year;
+  }
+  ksort($list['year']);
+  return $list;
+}
+
+function wrwa_custom_preprocess_views_view(&$vars) {
+
+  $view = $vars['view'];
+
+  if ($vars['view']->name == 'cities_served_nonstop_block') {
+
+    drupal_add_js(drupal_get_path('module', 'wrwa_custom') . '/js/wrwa_custom_cities_served.js');
+
+    $vars['city_options'] = array();
+    $vars['airlines_options'] = array();
+    foreach ($vars['view']->result as $item) {
+      $city = $item->field_field_cities_served_ns_title[0]['raw']['value'];
+      if (!isset($vars['city_options'][$city])) {
+        $vars['city_options'][$city] = $city;
+      }
+      $tid = $item->field_field_cities_served_ns_airline[0]['raw']['target_id'];
+      $name = $item->field_field_cities_served_ns_airline[0]['raw']['entity']->name;
+      if (!isset($vars['airlines_options'][$tid])) {
+        $vars['airlines_options'][$tid] = $name;
+      }
+    }
+
+    asort($vars['city_options']);
+    asort($vars['airlines_options']);
+
+  }
+
+}
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function wrwa_custom_entity_info_alter(&$entity_info) {
+  $entity_info['node']['view modes']['tablet'] = array(
+    'label' => t('Tablet'),
+    'custom settings' => TRUE,
+  );
+  $entity_info['node']['view modes']['mobile'] = array(
+    'label' => t('Mobile'),
+    'custom settings' => TRUE,
+  );
+}

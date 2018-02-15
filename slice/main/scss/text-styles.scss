@@ -1,0 +1,60 @@
+@import "compass";
+
+//base styles
+@import "common/mixins";
+@import "common/settings";
+
+.btn-link {
+  font-size: 17px;
+  text-transform: uppercase;
+  font-family: $klavika-bold;
+  background: #7b519c;
+  display: inline-block;
+  padding: 8px 18px 4px;
+  border: 2px solid #7b519c;
+  color: #fff !important;
+  margin: 0 0 15px;
+
+  &:hover {
+    text-decoration: none;
+    background: none;
+    color: #7b519c !important;
+  }
+}
+
+ul.list-with-icon {
+  margin: 0 0 30px;
+  padding: 0;
+  list-style: none;
+
+  @media (min-width: $width-middle) {
+    margin: 0 0 70px;
+  }
+
+  &.list-style-a {
+    margin: 0 0 50px;
+
+    li {
+      margin: 0 0 16px;
+    }
+  }
+
+  li {
+    position: relative;
+    padding-left: 50px;
+    margin: 0 0 15px;
+
+    @media (min-width: $width-middle) {
+      margin: 0 0 40px;
+    }
+
+    &:last-child {
+      margin: 0;
+    }
+
+    &:before {
+      @include pseudo-block($top: -5px, $left: -4px);
+      @include oneline-sprite-box($icons, icon-list);
+    }
+  }
+}

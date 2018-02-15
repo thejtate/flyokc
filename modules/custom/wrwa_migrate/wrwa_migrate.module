@@ -1,0 +1,403 @@
+<?php
+/**
+ * @file
+ * wrwa_migrate
+ */
+
+define('WRWA_MIGRATE_IPMORTER_UID', 81);
+
+
+/**
+ * Implements hook_menu().
+ */
+function wrwa_migrate_menu() {
+  $items = array();
+
+  $items['migrate'] = array(
+    'title' => 'Migrate news from old site',
+    'description' => 'Description',
+    'access callback' => 'user_access',
+    'access arguments' => array('administer content'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('wrwa_migrate_form'),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+
+function wrwa_migrate_form($form, $form_state) {
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Start Import'),
+    '#name' => 'add',
+  );
+
+  return $form;
+}
+
+/**
+ * Filter news rules.
+ *
+ * @param $news_type
+ * @param $data
+ *   news data array
+ *
+ * @return bool Allow or not to import news
+ */
+function wrwa_migrate_is_migration_allowed($news_type, $data) {
+
+  $allow_migrate = TRUE;//default allow all
+  $date = $data['date_object']->format('Y-m-d');
+
+  switch($news_type) {
+    case WRWA_NEWS_EVENTS_TID:
+      $allow_migrate = ($date >= '2013-01-01' && $date <= '2016-10-31') || $date > '2017-01-26';
+      break;
+    case WRWA_NEWS_ADVISORIES_TID:
+      $allow_migrate = ($date >= '2013-01-01');
+      break;
+    case WRWA_NEWS_PRESS_TID:
+      $allow_migrate = ($date >= '2013-01-01' && $date <= '2016-08-21') || $date > '2017-01-26';
+      break;
+    case WRWA_NEWS_STATISTIC_TID:
+      //all
+      break;
+    case WRWA_NEWS_PUBLICATION_TID:
+      $allow_migrate = ($date >= '2013-01-01');
+      break;
+      case 'agendas':
+        $allow_migrate = ($date >= '2013-01-01' && $date <= '2016-08-21') || $date > '2017-01-25';
+      break;
+
+  }
+
+  return $allow_migrate;
+}
+
+function wrwa_migrate_form_submit() {
+
+  $batch = array(
+    'operations' => array(
+      array('wrwa_migrate_news', array(array('url' => 'http://flyokc.com/CurrentEvents.aspx', 'type' => WRWA_NEWS_EVENTS_TID, 'selector' => 'div.news-item', 'fetch_callback' => 'wrwa_migrate_fetch1'))),
+      array('wrwa_migrate_news', array(array('url' => 'http://www.flyokc.com/Alerts.aspx', 'type' => WRWA_NEWS_ADVISORIES_TID, 'selector' => 'div.alert-item', 'fetch_callback' => 'wrwa_migrate_fetch1'))),
+      array('wrwa_migrate_news', array(array('url' => 'http://www.flyokc.com/Publications.aspx?Year=2017' , 'type' => WRWA_NEWS_PUBLICATION_TID, 'selector' => 'div.release-item', 'fetch_callback' => 'wrwa_migrate_fetch2'))),
+      array('wrwa_migrate_news', array(array('url' => 'http://www.flyokc.com/Publications.aspx?Year=2016', 'type' => WRWA_NEWS_PUBLICATION_TID, 'selector' => 'div.release-item', 'fetch_callback' => 'wrwa_migrate_fetch2'))),
+      array('wrwa_migrate_news', array(array('url' => 'http://www.flyokc.com/Publications.aspx?Year=2014', 'type' => WRWA_NEWS_PUBLICATION_TID, 'selector' => 'div.release-item', 'fetch_callback' => 'wrwa_migrate_fetch2'))),
+    ),
+
+    'finished' => 'wrwa_batch_finished',
+  );
+
+  for($year = 2013; $year <= 2017; $year++) {
+    $batch['operations'][] = array('wrwa_migrate_news', array(array('url' => 'http://www.flyokc.com/PressReleases.aspx?Year=' . $year, 'type' => WRWA_NEWS_PRESS_TID, 'selector' => 'div.release-item', 'fetch_callback' => 'wrwa_migrate_fetch2')));
+  }
+
+  for($year = 2000; $year <= 2017; $year++) {
+    $batch['operations'][] = array('wrwa_migrate_news', array(array('url' => 'http://www.flyokc.com/Statistics.aspx?Year=' . $year, 'type' => WRWA_NEWS_STATISTIC_TID, 'selector' => 'div.release-item', 'fetch_callback' => 'wrwa_migrate_fetch2')));
+  }
+
+  for($year = 2013; $year <= 2017; $year++) {
+    $batch['operations'][] = array('wrwa_migrate_news', array(array('url' => 'http://flyokc.com/TrustMeetingAgendas.aspx?Year=' . $year, 'type' => 'agenda', 'selector' => 'div.release-item', 'fetch_callback' => 'wrwa_migrate_fetch2')));
+  }
+
+  batch_set($batch);
+}
+
+/**
+ * Batch operation callback.
+ *
+ * @param $options
+ * @param $context
+ */
+function wrwa_migrate_news($options, &$context) {
+  module_load_include('php', 'wrwa_migrate', '/lib/simple_html_dom');
+  module_load_include('inc', 'imce', '/inc/imce.page');
+
+  if (empty($context['sandbox'])) {
+    $context['sandbox']['progress'] = 0;
+    $context['sandbox']['content'] = file_get_contents($options['url']);
+    $html_dom_parser = str_get_html($context['sandbox']['content']);
+    $context['sandbox']['max'] = count($html_dom_parser->find($options['selector']));
+    if(empty($context['results'])) {
+      $context['results']['processed_count'] = 0;
+      $context['results']['skip_count'] = 0;
+      $context['results']['errors'] = 0;
+    }
+  }
+
+  try {
+    if(!isset($html_dom_parser)) {
+      $html_dom_parser = str_get_html($context['sandbox']['content']);
+    }
+
+    $item = $html_dom_parser->find($options['selector'], $context['sandbox']['progress']);
+    $data = call_user_func($options['fetch_callback'], $item);
+
+    if(wrwa_migrate_is_migration_allowed($options['type'], $data)) {
+
+      if($options['type'] != 'agenda') {
+        wrwa_migrate_news_node_save($data, $options['type']);
+      } else {
+        wrwa_migrate_agenda_node_save($data);
+      }
+
+
+      $context['results']['processed_count']++;
+    } else {
+      $context['results']['skip_count']++;
+    }
+
+  } catch (Exception $e) {
+    $context['results']['errors']++;
+    watchdog(
+      'wrwa_migrate_error',
+      'Error on import <pre>' . print_r(array('message' => $e->getMessage(),'news_type_tid' => $options['type'],'data' => !empty($data) ? $data : ''), TRUE) . '</pre>'
+    );
+  }
+
+  $context['sandbox']['progress']++;
+  $context['message'] = t('Now processing %progress', array('%progress' => $context['sandbox']['progress']));
+
+  if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
+    $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+  }
+
+}
+
+/**
+ * Fetch and formating News data from html. Type 1 - html with big text blocks.
+ *
+ * @param \simple_html_dom_node $item
+ *
+ * @return array of data [full_text, name, month, day, year, image, date_object]
+ */
+function wrwa_migrate_fetch1(simple_html_dom_node $item) {
+
+  $img = $item->find('div.news-image img', 0);
+  $text = $item->find('td.text', 0)->first_child();
+
+  $data = array(
+    'full_text' => $item->innertext(),
+    'text' => $text->innertext(),
+    'name' => $item->find('div.title a', 0)->innertext(),
+    'month' => $item->find('.date .month span', 0)->innertext(),
+    'day' => $item->find('.date .day span', 0)->innertext(),
+    'year' => $item->find('.date .year span', 0)->innertext(),
+    'image' => !empty($img) ? $img->getAttribute('src') : '',
+  );
+
+  $data['date_object'] = new DateTime($data['day'] . ' ' . $data['month'] . ' ' . $data['year']);
+
+
+  $content_links = $text->find('a');
+  //find links to files in text, upload and change url
+  if(!empty($content_links)) {
+    foreach ($content_links as $link) {
+
+      $link_url = $link->getAttribute('href');
+
+      if (strpos($link_url, 'http://flyokc.com') === 0 ||
+        strpos($link_url, '../') === 0
+      ) {
+
+        $link_url_absolute = preg_replace('/^\.\.\//', 'http://flyokc.com/', $link_url);
+
+        $pathinfo = pathinfo($link_url_absolute);
+
+        if (!empty($pathinfo['extension'])
+          && in_array($pathinfo['extension'], array('doc', 'pdf', 'docx', 'doc', 'xls', 'xlsx'))
+        ) {
+
+          $file = wrwa_migrate_upload_remote_file($link_url_absolute);
+
+          if(!empty($file)) {
+            imce_file_register($file);//add imce usage
+            $url = file_create_url($file->uri);
+            $url = parse_url($url);
+            $local_url = $url['path'];
+            $data['text'] = str_replace($link_url, $local_url, $data['text']);
+          }
+        }
+      }
+    }
+  }
+
+  return $data;
+}
+
+/**
+ * Fetch and formating News data from html. Type 2 - links with files.
+ *
+ * @param \simple_html_dom_node $item
+ *
+ * @return array of data [full_text, name, month, day, year, file, date_object]
+ */
+function wrwa_migrate_fetch2(simple_html_dom_node $item) {
+
+  $file = $item->find('a.download-button', 0);
+  $text = $item->find('div.release-by', 0);
+
+  $data = array(
+    'full_text' => $item->innertext(),
+    'text' => strip_tags(trim($text->innertext())),
+    'name' => $item->find('div.header-container a span', 0)->innertext(),
+    'month' => $item->find('.date-capsule .month span', 0)->innertext(),
+    'day' => $item->find('.date-capsule .day span', 0)->innertext(),
+    'year' => $item->find('.date-capsule .year span', 0)->innertext(),
+    'image' => '',
+    'file' => !empty($file) ? $file->getAttribute('href') : '',
+  );
+
+  $data['date_object'] = new DateTime($data['day'] . ' ' . $data['month'] . ' ' . $data['year']);
+
+  return $data;
+}
+
+/**
+ * Batch finish callback.
+ *
+ * @param $success
+ * @param $results
+ * @param $operations
+ */
+function wrwa_batch_finished($success, $results, $operations) {
+
+  drupal_set_message(t('Processed %p items, skipped by date %s', array('%p' => $results['processed_count'], '%s' => $results['skip_count'])));
+
+  if(!empty($results['errors'])) {
+    drupal_set_message(t('Some errors occurs in %e item(s), see watchdog for details ', array('%p' => $results['errors'])), 'error');
+  }
+
+}
+
+
+function wrwa_migrate_news_node_save($data, $type_tid) {
+
+  $values = array(
+    'type' => 'news',
+    'uid' => WRWA_MIGRATE_IPMORTER_UID,
+  );
+  $entity = entity_create('node', $values);
+
+  $wrap = entity_metadata_wrapper('node', $entity);
+
+  $wrap->title = $data['name'];
+
+  $wrap->body->set(array(
+    'value' => $data['text'],
+    'format' => 'full_html',
+  ));
+
+  $wrap->raw()->field_projects_date[LANGUAGE_NONE][0]['value'] = $data['date_object']->format('Y-m-d H:i:s');
+  $wrap->raw()->field_projects_date[LANGUAGE_NONE][0]['value2'] = $data['date_object']->format('Y-m-d H:i:s');
+
+  $wrap->field_news_taxonomy_term_ref->set($type_tid);
+
+  if(!empty($data['image'])) {
+    $img_file = wrwa_migrate_upload_remote_file($data['image']);
+    if($img_file) {
+      $wrap->field_news_image->set((array) $img_file);
+      $wrap->field_projects_teaser_image->set((array) $img_file);
+    }
+  }
+
+  if(!empty($data['file'])) {
+    $file = wrwa_migrate_upload_remote_file($data['file']);
+    $file->display = '1';
+    if($file) {
+      $wrap->field_news_file->set((array) $file);
+    }
+  }
+
+
+  $wrap->save();
+}
+
+function wrwa_migrate_agenda_node_save($data) {
+
+  $values = array(
+    'type' => 'airport_trust_meeting_agendas',
+    'uid' => WRWA_MIGRATE_IPMORTER_UID,
+  );
+  $entity = entity_create('node', $values);
+
+  $wrap = entity_metadata_wrapper('node', $entity);
+
+  $wrap->title = $data['name'];
+
+  $wrap->body->set(array(
+    'value' => $data['text'],
+    'format' => 'full_html',
+  ));
+
+  $wrap->raw()->field_atma_date[LANGUAGE_NONE][0]['value'] = $data['date_object']->format('Y-m-d H:i:s');
+  $wrap->raw()->field_atma_date[LANGUAGE_NONE][0]['value2'] = $data['date_object']->format('Y-m-d H:i:s');
+
+  if(!empty($data['file'])) {
+    $file = wrwa_migrate_upload_remote_file($data['file']);
+    $file->display = '1';
+    if($file) {
+      $wrap->field_atma_file->set((array) $file);
+    }
+  }
+
+  $wrap->save();
+}
+
+function wrwa_migrate_upload_remote_file($url, $dir = 'public://') {
+
+  $temp = file_directory_temp();
+  $pathinfo = pathinfo($url);
+
+  $temp_path = $temp . '/' . $pathinfo['basename'];
+  $result = copy($url, $temp_path);
+
+  if (!$result) {
+    drupal_set_message('Error copy remote file to temporary directory ' . $url, 'warning');
+    return FALSE;
+  }
+
+  if(strpos($pathinfo['extension'], 'aspx?') === 0) {
+    //fix mime type for images with .aspx file urls
+    $extension = 'jpeg';//default
+    switch($mimetype = mime_content_type($temp_path)) {
+      case 'image/gif':
+        $extension = 'gif';
+        break;
+      case 'image/png':
+        $extension = 'png';
+        break;
+    }
+
+    $fixed_name = preg_replace('/\.aspx\?.*/i', ".$extension", $pathinfo['basename']);
+    $destination = $dir . $fixed_name;
+  } else {
+    $mimetype = file_get_mimetype($temp_path);
+    $destination = $dir;
+  }
+
+  $file = (object) array(
+    'uid' => WRWA_MIGRATE_IPMORTER_UID,
+    'uri' => $temp_path,
+    'filemime' => $mimetype,
+    'filename' => $pathinfo['basename'],
+  );
+
+  // Move the file, into the Drupal file system
+  $file = file_move($file, $destination);
+
+  if ($file) {
+    $file->status = FILE_STATUS_PERMANENT;
+
+    $file = file_save($file);
+  }
+  else {
+    drupal_set_message('Failed to write the uploaded file to the site\'s public file folder ' . $url, 'warning');
+    return FALSE;
+  }
+
+  return $file;
+}

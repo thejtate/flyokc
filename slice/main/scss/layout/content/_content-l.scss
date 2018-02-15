@@ -1,0 +1,40 @@
+.content-wrapper {
+
+  .flights-list, .sticky-header {
+    margin-bottom: 60px;
+
+    td {
+      padding: 12px 27px;
+
+      &:first-child {
+        padding: 12px 40px;
+        max-width: 200px;
+      }
+
+      &:last-child {
+        text-align: center;
+      }
+    }
+
+    th {
+      padding: 12px 27px;
+
+      &:first-child {
+        width: 200px;
+      }
+    }
+  }
+
+  .top-navigation {
+    margin-bottom: 55px;
+
+    h1 {
+      font-size: 34px;
+    }
+  }
+
+  .section-about-desc .site-container{
+   // width: 80%;
+   // padding-right: 25px;
+  }
+}

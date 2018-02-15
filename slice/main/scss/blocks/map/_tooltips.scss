@@ -1,0 +1,204 @@
+.b-map {
+
+  .tooltip {
+    opacity: 0;
+    visibility: hidden;
+    text-align: left;
+    text-transform: none;
+    line-height: 1;
+    background: #fff;
+    padding: 10px 8px 5px 10px;
+    display: none;
+
+    .tablet &, .mobile & {
+      position: fixed;
+      right: 0;
+      left: 0 !important;
+      top: auto !important;
+      bottom: 0;
+      width: 90%;
+      margin: 0 auto 20px;
+      overflow-y: auto;
+      max-height: calc(100% - 75px);
+    }
+
+    .mobile & {
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .desktop & {
+      display: block;
+      position: absolute;
+      @include translate(-50%, -12px);
+    }
+
+    &.active {
+      z-index: 2;
+      opacity: 1;
+      visibility: visible;
+      @include transition(opacity .2s, visibility .2s, transform .2s);
+
+      .tooltip &, .mobile & {
+        z-index: 9999;
+      }
+
+      .desktop & {
+        @include translate(-50%, -25px);
+      }
+
+      .active-mobile-tooltip & {
+        display: block;
+      }
+    }
+
+    .desktop & {
+
+      &:after {
+        @include pseudo-block($left: 50%, $top: 100%);
+        @include translate(-50%, 0);
+        border-left: 9px solid transparent;
+        border-right: 9px solid transparent;
+        border-top: 10px solid #fff;
+      }
+    }
+
+    &.left {
+
+      &:after {
+        left: 20px;
+        @include translate(0, 0);
+      }
+    }
+
+    &.pull-center {
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .tooltip-title {
+      text-align: center;
+    }
+
+    .tooltip-title, .tooltip-hd {
+      font-family: $klavika-bold;
+      color: #009bdf;
+      display: inline-block;
+    }
+
+    .tooltip-title {
+      font-size: 18px;
+    }
+
+    .tooltip-hd, .tooltip-bd {
+      display: block;
+
+      .desktop & {
+        width: 218px;
+      }
+    }
+
+    .tooltip-hd {
+      font-size: 14px;
+      padding: 6px 0 10px;
+    }
+
+    .tooltip-bd {
+      border-top: 2px dotted #eaeaea;
+      color: #686868;
+      font-family: $klavika-regular;
+      text-align: left;
+      font-size: 14px;
+      padding: 10px 0 6px;
+    }
+
+    .ss-icon {
+      color: #009bdf;
+      position: relative;
+      font-size: 14px;
+      margin-left: 5px;
+      top: 1px;
+    }
+  }
+
+  .tooltips-wrapper {
+
+    .tablet &, .mobile & {
+      position: relative;
+      z-index: 9999;
+    }
+
+    .tooltip {
+
+      .admin-menu & {
+
+        .desktop & {
+          margin-top: -29px;
+
+          @media screen and (max-width: 1024px) {
+            margin-top: -47px;
+          }
+        }
+      }
+
+      .desktop & {
+        @include translate(0, -12px);
+      }
+
+      &.active {
+
+        .desktop & {
+          @include translate(0, -25px);
+        }
+      }
+    }
+  }
+
+  .img-tooltip {
+    background: #ff8500;
+    font-size: 12px;
+    font-family: $klavika-bold;
+    color: #fff;
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    @include transition(opacity .3s, visibility .3s);
+    position: absolute;
+    padding: 5px 12px;
+    @include animation(left-to-right 2s infinite linear);
+
+    &:before {
+      @include pseudo-block($right: 100%, $top: 50%);
+      @include translate(0, -50%);
+      border-right: 5px solid #ff8500;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+    }
+  }
+
+  .tooltip-car-rental {
+    top: 172px;
+    left: 535px;
+
+    .tablet &, .mobile & {
+      left: 125px;
+    }
+  }
+
+  .tooltip-parking {
+    top: 570px;
+    left: 784px;
+
+    .tablet &, .mobile & {
+      left: 400px;
+    }
+  }
+
+  .tooltip-terminal {
+    top: 664px;
+    left: 805px;
+
+    .tablet &, .mobile & {
+      left: 400px;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+.section-slider {
+
+  .slides img {
+    //height: 430px;
+    width: 100%;
+    position: relative;
+    left: 50%;
+    @include transform(translate(-50%, 0));
+  }
+}

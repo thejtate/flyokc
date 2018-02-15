@@ -1,0 +1,100 @@
+<?php
+/**
+ * @file
+ * WRWA Flight tracker
+ */
+
+define('WRWA_TRACKER_NID', 246);
+
+module_load_include('inc', 'wrwa_tracker', 'includes/wrwa_tracker.subscribe');
+module_load_include('inc', 'wrwa_tracker', 'includes/wrwa_tracker.unsubscribe');
+module_load_include('inc', 'wrwa_tracker', 'includes/wrwa_tracker.cancel');
+
+/**
+ * Implements hook_theme().
+ */
+function wrwa_tracker_theme() {
+  $return = array();
+
+  $return['wrwa_tracker_forms'] = array(
+    'variables' => array('subscribe_form' => NULL, 'unsubscribe_form' => NULL),
+    'template' => '/templates/wrwa-tracker-forms'
+  );
+  $return['wrwa_tracker_form_cancel'] = array(
+    'variables' => array('form' => NULL,),
+    'template' => '/templates/wrwa-tracker-form-cancel'
+  );
+  $return['wrwa_tracker_form_confirmation'] = array(
+    'variables' => array('message' => '',),
+    'template' => '/templates/wrwa-tracker-form-confirmation'
+  );
+
+  return $return;
+}
+
+function wrwa_tracker_preprocess_node(&$vars) {
+  if ($vars['nid'] == WRWA_TRACKER_NID) {
+    $vars['content']['forms'] = array(
+      '#markup' => theme(
+        'wrwa_tracker_forms',
+        array(
+          'subscribe_form' => drupal_get_form('wrwa_tracker_subscribe_form'),
+        )
+      ),
+    );
+  }
+}
+
+
+function wrwa_tracker_request($url, $params = array()) {
+
+  $response = drupal_http_request(
+    $url,
+    array(
+      'data' => http_build_query($params),
+      'method' => 'POST',
+      'headers' => array('Content-Type' => 'application/x-www-form-urlencoded')
+    )
+  );
+  return $response;
+}
+
+
+
+/**
+ * Return array of flights from external xml. Only departures.
+ *
+ * @return array
+ */
+function wrwa_tracker_get_flights() {
+  $flights = array();
+
+  $xml_flights = wrwa_flights_get_xml();
+
+  foreach ($xml_flights as $flight) {
+    if(!empty($flight['type']) && $flight['type'] == 'D' && !empty($flight['flightnumber'])) {
+      $flights[] = $flight;
+    }
+  }
+
+  return $flights;
+}
+
+function wrwa_tracker_get_flights_options($flights) {
+  $options = array();
+  foreach ($flights as $flight) {
+    $options[$flight['flightnumber']] = $flight['flightnumber'];
+  }
+
+  asort($options);
+
+  return $options;
+}
+
+function wrwa_tracker_element_validate_mail($element, &$form_state) {
+    $value = $element['#value'];
+    if ($value !== '' && !valid_email_address($value)) {
+        form_error($element, t('The e-mail address %mail is not valid.', array('%mail' => $value)));
+    }
+}
+

@@ -1,0 +1,29 @@
+
+name = wrwa
+description = WRWA custom theme.
+package = wrwa
+version = 1.0
+core = 7.x
+
+stylesheets[all][] = css/styles.css
+stylesheets[all][] = css/text-styles.css
+stylesheets[all][] = css/custom.css
+
+scripts[] = js/lib/device.min.js
+scripts[] = js/js.js
+scripts[] = js/custom.js
+scripts[] = js/lib/jquery.flexslider-min.js
+scripts[] = js/lib/select2.full.min.js
+scripts[] = js/lib/ss-glyphish-filled.js
+scripts[] = js/lib/ss-social.js
+scripts[] = js/lib/ss-symbolicons.js
+scripts[] = js/lib/ss-standard.js
+
+regions[header] = Header
+regions[help] = Help
+regions[search] = Search
+
+regions[content_top] = Content top
+regions[content] = Content
+
+regions[footer] = Footer

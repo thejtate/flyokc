@@ -1,0 +1,12 @@
+.site-container {
+  margin: 0 auto;
+  @include clearfix();
+  position: relative;
+
+  .page-about & {
+
+    &.content-wrapper {
+      width: 100% !important;
+    }
+  }
+}

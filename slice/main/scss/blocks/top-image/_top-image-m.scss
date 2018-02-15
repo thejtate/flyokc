@@ -1,0 +1,11 @@
+.top-image {
+
+  img {
+    width: auto;
+    max-width: none;
+    display: block;
+    position: relative;
+    left: 50%;
+    @include transform(translateX(-50%));
+  }
+}

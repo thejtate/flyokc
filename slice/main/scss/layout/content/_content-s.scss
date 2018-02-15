@@ -1,0 +1,41 @@
+.content-wrapper {
+
+  .mobile-nav-active & {
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+  }
+
+  .flights-list, .sticky-header {
+    display: none;
+  }
+
+  .top-navigation{
+    margin-bottom: 30px;
+
+    h1 {
+      font-size: 24px;
+    }
+  }
+
+  .flights-list-mobile {
+    display: block;
+
+    a {
+      color: #7B519C !important;
+      position: absolute;
+      bottom: 30px;
+      right: 20px;
+    }
+  }
+
+  .parts-top {
+    margin-bottom: 25px;
+
+    h3 {
+      font-size: 28px;
+      float: none;
+      margin-bottom: 20px;
+    }
+  }
+}

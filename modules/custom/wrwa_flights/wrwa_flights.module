@@ -1,0 +1,550 @@
+<?php
+
+/**
+ * @file
+ * WRWA Flights
+ */
+
+define('WRWA_FLIGHTS_ARILINES_TAXONOMY_VID', 3);
+define('WRWA_FLIGHTS_DATA_URL', 'http://infax.com/webfids/okc/data.xml');
+define('WRWA_FLIGHTS_DEFAULT_OUTPUT_TYPE', 'list');//list or blocks
+
+/**
+ * Implements hook_theme().
+ */
+function wrwa_flights_theme() {
+  $return = array();
+
+  $return['wrwa_flights'] = array(
+    'variables' => array(
+      'flights' => array(),
+      'empty' => t('No Flights Found'),
+      'mobile_track_links' => array(),
+      'type' => '',
+    ),
+    'template' => '/templates/wrwa-flights'
+  );
+  $return['wrwa_flights_form'] = array(
+    'render element' => 'form',
+    'template' => '/templates/wrwa-flights-form'
+  );
+  return $return;
+}
+
+
+/**
+ * Return array of flights from external xml.
+ *
+ * @param $filters Array of data filters. Optional
+ *  Filter keys: type, indicator, airlinecode, flightnumber, city, date, scheduletime, actualtime, gate, remarks, claim
+ *
+ * @return array
+ */
+function wrwa_flights_xlm_load($filters = array(), &$locations) {
+  $flights = array();
+
+
+  try{
+
+    $xml_flights = wrwa_flights_get_xml();
+
+      foreach ($xml_flights as $flight) {
+
+        $filter_pass = TRUE;
+        $filter_type_pass = TRUE;
+
+        if (!empty($filters)) {
+          foreach ($filters as $filter_key => $filter_value) {
+
+            if (!isset($flight[$filter_key])) {
+              $filter_pass = FALSE;
+              break;
+            } else if ($filter_key == 'type' && $flight[$filter_key] !== $filter_value) {
+              $filter_pass = FALSE;
+              $filter_type_pass = FALSE;
+              break;
+            } else if ($filter_key == 'city') {
+
+              if (strpos(strtolower($flight[$filter_key]), strtolower(trim($filter_value))) === FALSE) {
+                $filter_pass = FALSE;
+                break;
+              }
+
+            } else if($filter_key == 'scheduletime') {
+
+              $flight_timestamp = (!empty($flight['date']) && !empty($flight['scheduletime'])) ? strtotime($flight['date'] . ' ' . $flight['scheduletime']) : 0;
+              if(!empty($flight_timestamp)) {
+                $datetime_str = format_date(
+                  $flight_timestamp,
+                  'custom',
+                  DATE_FORMAT_DATETIME
+                );
+                $now_date = new DateObject();
+                $now_date_str = $now_date->format(DATE_FORMAT_DATETIME);
+                if ($now_date_str <= $datetime_str && $datetime_str >= $filter_value || $flight['remarks'] == 'ARRIVED') {
+                  $filter_pass = FALSE;
+                  break;
+                }
+              }
+
+            } else {
+              if ($flight[$filter_key] !== $filter_value) {
+                $filter_pass = FALSE;
+                break;
+              }
+            }
+          }
+
+          if(!in_array($flight['city'], $locations) && $filter_type_pass) {
+            $locations[] = $flight['city'];
+          }
+
+          if ($filter_pass) {
+            $flights[] = $flight;
+          }
+        }
+      }
+
+  } catch (Exception $e) {
+    //drupal_set_message('Error connecting to the external service.', 'warning');
+    watchdog('wrwa_flights', 'Error connecting to external service in %function() <pre>@trace</pre>', array('%function' => __FUNCTION__, '@trace' => $e->getTraceAsString()), WATCHDOG_ERROR);
+  }
+
+  sort($locations);
+  return $flights;
+}
+
+/**
+ * Get flights xml from external service.
+ */
+function wrwa_flights_get_xml() {
+
+  $flights = array();
+
+  try{
+    //Turning errors into exceptions
+    set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontext) {
+      // error was suppressed with the @-operator
+      if (0 === error_reporting()) {
+        return false;
+      }
+
+      throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+    });
+
+    $xml = simplexml_load_file(WRWA_FLIGHTS_DATA_URL);
+//    $ch = curl_init(WRWA_FLIGHTS_DATA_URL);
+//    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//    curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+//    $xmlstr = curl_exec($ch);
+//    curl_close($ch);
+//    $xml = @simplexml_load_string($xmlstr);
+
+    if(!empty($xml) && isset($xml->flight)) {
+        foreach ($xml->flight as $xml_flight) {
+          $flight = array();
+          foreach ($xml_flight->attributes() as $name => $value) {
+            $flight[$name] = trim($value);
+          }
+          $flights[] = $flight;
+        }
+
+      cache_set('wrwa_flights_get_xml', $flights, 'cache', REQUEST_TIME + 1800);//cache for 30 min
+    }
+
+  } catch (Exception $e) {
+   // drupal_set_message('Error connecting to the external service.' . $e->getMessage(), 'warning');
+
+    //cache fallback, because external service sometime unavailable.
+    if ($cache = cache_get('wrwa_flights_get_xml')) {
+      $flights = $cache->data;
+    }
+    watchdog('wrwa_flights', 'Error connecting to external service in %function() <pre>@trace</pre>', array('%function' => __FUNCTION__, '@trace' => $e->getTraceAsString()), WATCHDOG_WARNING);
+  }
+
+  restore_error_handler();
+  return $flights;
+}
+
+
+function wrwa_flights_format_data($flights, $airlines, $type) {
+  $output = array();
+  $text_track_links = array();
+
+  foreach ($flights as $flight) {
+    //Available keys
+    //type, indicator, airlinecode, flightnumber, city, date, scheduletime, actualtime, gate, remarks, claim
+
+    $flight_row = array();
+
+    $flight_row['airline'] = !empty($flight['airlinecode']) ? wrwa_flights_get_airline_info(
+      $airlines,
+      $flight['airlinecode']
+    ) : '';
+
+    $flight_row['flightnumber'] = !empty($flight['flightnumber']) ? check_plain($flight['flightnumber']) : '';
+    $flight_row['city'] = !empty($flight['city']) ? check_plain($flight['city']) : '';
+
+    $flight_timestamp = (!empty($flight['date']) && !empty($flight['scheduletime'])) ? strtotime($flight['date'] . ' ' . $flight['scheduletime']) : 0;
+    $flight_row['time'] = (!empty($flight_timestamp)) ? format_date(
+      $flight_timestamp,
+      'custom',
+      'g:i a'
+    ) : '';
+    $flight_row['gate'] = !empty($flight['gate']) ? check_plain($flight['gate']) : '';
+
+    if ($type == 'arrivals') {
+      $flight_row['claim'] = !empty($flight['claim']) ? check_plain($flight['claim']) : '';
+    }
+    $flight_row['remarks'] = !empty($flight['remarks']) ? check_plain($flight['remarks']) : '';
+
+
+    $flight_row['track_link'] = wrwa_flight_get_track_link($flight, $flight_timestamp);
+
+
+    $output[] = $flight_row;
+    $text_track_links[] = wrwa_flight_get_track_link($flight, $flight_timestamp, 'Track-a-Flight');
+  }
+
+  return array($output, $text_track_links);
+}
+
+/**
+ * Get track link html.
+ */
+function wrwa_flight_get_track_link($flight, $flight_timestamp, $inner_text = '') {
+  $flight_date = format_date($flight_timestamp, 'custom', 'Ymd');
+  $date_param_key = ($flight['type'] == 'D') ? 'depdate' : 'arrdate';
+  $loc_param_key = ($flight['type'] == 'D') ? 'DEPAP' : 'ARRAP';
+
+  $title = ($flight['type'] == 'D') ? t('Click here to track this flight in real-time on your screen') : '';
+  $onclick="popUpNew('http://tracker.flightview.com/customersetup/OklahomaCity/tracker/?" . $loc_param_key . "=OKC&fn=" . $flight['flightnumber']  . "&al=" . $flight['airlinecode'] . "&" . $date_param_key . "=". $flight_date  . "'); return false;";
+
+  if(empty($inner_text)) {
+    $inner_text = '<img src="' . base_path() .  drupal_get_path('theme', 'wrwa') . '/images/icons/arrow-purple.png" alt="">';
+  }
+
+
+  return  '<a href="/" title="' . $title .  '" onclick="' . $onclick . '">' . $inner_text . '</a>';
+}
+
+/**
+ * Return airline image (if exist) or name.
+ */
+function wrwa_flights_get_airline_info($airlines, $code) {
+
+  $info = '';
+
+  if (!empty($airlines[$code])) {
+
+    if (!empty($airlines[$code]['image'])) {
+      $info = theme('image', (array('path' => $airlines[$code]['image'])));
+    }
+    else {
+      if (!empty($airlines[$code]['name'])) {
+        $info = $airlines[$code]['name'];
+      }
+    }
+  }
+  else {
+    $info = $code;
+  }
+
+  return $info;
+}
+
+function wrwa_flights_get_airlines_info() {
+
+  $voc = taxonomy_term_load_multiple(
+    array(),
+    array('vid' => WRWA_FLIGHTS_ARILINES_TAXONOMY_VID)
+  );
+
+  $airlines = array();
+  foreach ($voc as $term) {
+    $airlines[$term->field_airline_short_code[LANGUAGE_NONE][0]['value']] = array(
+      'name' => $term->name,
+      'image' => !empty($term->field_airline_image[LANGUAGE_NONE][0]['uri']) ? file_create_url(
+        $term->field_airline_image[LANGUAGE_NONE][0]['uri']
+      ) : '',
+    );
+  }
+
+  return $airlines;
+}
+
+/**
+ * Form with results.
+ * $type string (arrivals or departures)
+ */
+function wrwa_flights_form($form, &$form_state, $type = 'departures') {
+
+  $airlines = wrwa_flights_get_airlines_info();
+  //Important to store all locations in formstate to prevent dropping one on next api call, it will brake location select on filtering.
+  if(!isset($form_state['all_locations'])) {
+    $form_state['all_locations'] = array();
+  }
+
+  $filters = array();
+  if ($type == 'departures') {
+    $filters['type'] = 'D';
+  }
+  else {
+    if ($type == 'arrivals') {
+      $filters['type'] = 'A';
+    }
+  }
+
+  if (!empty($form_state['values']['number'])) {
+    $filters['flightnumber'] = $form_state['values']['number'];
+  }
+
+  if (!empty($form_state['values']['airline'])) {
+    $filters['airlinecode'] = $form_state['values']['airline'];
+  }
+
+
+  if (!empty($form_state['values']['location'])) {
+    $filters['city'] = $form_state['values']['location'];
+  }
+
+  $status = !empty($form_state['values']['status']) ? $form_state['values']['status'] : '';
+
+  switch($status) {
+    case 'arrived':
+      $filters['remarks'] = 'ARRIVED';
+      break;
+    case 'hour':
+      $now_date = new DateObject();
+      $now_date->add(new DateInterval('PT1H'));
+      $filters['scheduletime'] = $now_date->format(DATE_FORMAT_DATETIME);
+      break;
+    case '6hours':
+      $now_date = new DateObject();
+      $now_date->add(new DateInterval('PT2H'));
+      $filters['scheduletime'] = $now_date->format(DATE_FORMAT_DATETIME);
+      break;
+    case '12hours':
+      $now_date = new DateObject();
+      $now_date->add(new DateInterval('PT2H'));
+      $filters['scheduletime'] = $now_date->format(DATE_FORMAT_DATETIME);
+      break;
+  }
+
+  $flights = wrwa_flights_xlm_load($filters, $form_state['all_locations']);
+
+  list($flights, $text_track_links) = wrwa_flights_format_data($flights, $airlines, $type);
+
+  $wrapper_id = drupal_html_id('wrwa-flights');
+  ctools_add_js('auto-submit');
+  $form['#prefix'] = '<div id="' . $wrapper_id . '">';
+  $form['#suffix'] = '</div>';
+  $form['#attributes']['class'] = array('wrwa-flights-filters-form');
+  $form['#attributes']['class'][] = 'ctools-auto-submit-full-form';
+  $form['#attributes']['class'][] = !empty($form_state['values']['output_type']) ? $form_state['values']['output_type'] : WRWA_FLIGHTS_DEFAULT_OUTPUT_TYPE;
+  $form['#attributes']['data-type'] = $type;
+  $form['#attached']['js'][] = drupal_get_path('module', 'wrwa_flights') . '/js/wrwa_flights.js';
+
+  $form['airline'] = array(
+    '#type' => 'select',
+    '#required' => FALSE,
+    '#title' => '',
+    '#empty_option' => t('Airline'),
+    '#options' => wrwa_flights_get_airlines_options($airlines),
+  );
+
+  $form['location'] = array(
+    '#type' => 'select',
+    '#required' => FALSE,
+    '#title' => '',
+    '#empty_option' => t('Location'),
+    '#options' => drupal_map_assoc($form_state['all_locations']),
+  );
+
+  $status_options = array();
+  if(($type == 'arrivals')) {
+    $status_options['arrived'] = t('Recently Arrived');
+  }
+  $status_options['hour'] = ($type == 'arrivals') ? t('Arriving Next Hour') : t('Departing Next Hour');
+  $status_options['6hours'] = ($type == 'arrivals') ? t('Arriving Next 6 Hours') : t('Departing Next 6 Hours');
+  $status_options['12hours'] = ($type == 'arrivals') ? t('Arriving Next 12 Hours') : t('Departing Next 12 Hours');
+
+  $form['status'] = array(
+    '#type' => 'select',
+    '#required' => FALSE,
+    '#title' => 'Status',
+    '#empty_option' => t('Show All'),
+    '#default_value' => $form_state['submitted'] ? $form_state['submitted'] : array(),
+    '#options' => $status_options
+  );
+
+  $form['number'] = array(
+    '#type' => 'numberfield',
+    '#step' => NULL,
+    '#required' => FALSE,
+    '#title' => '',
+    '#attributes' => array('placeholder' => 'Flight #')
+  );
+
+  $form['output_type'] = array(
+    '#type' => 'radios',
+    '#title' => t('View'),
+    '#default_value' => WRWA_FLIGHTS_DEFAULT_OUTPUT_TYPE,
+    '#options' => array('blocks' => 'blocks', 'list' => 'list' ),
+    '#attributes' => array('class' => array('ctools-auto-submit-exclude'))
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Filter'),
+    '#name' => 'search',
+    '#submit' => array('wrwa_flights_form_filter_submit'),
+    '#ajax' => array(
+      'callback' => 'wrwa_flights_submit_ajax',
+      'wrapper' => $wrapper_id,
+      'effect' => 'fade',
+      'speed' => 'fast',
+      'event' => 'click',
+    ),
+    '#attributes' => array('class' => array('ctools-auto-submit-click', 'ctools-use-ajax')),
+  );
+
+  $form['clear'] = array(
+    '#type' => 'submit',
+    '#value' => t('Clear Filters'),
+    '#name' => 'clear',
+    '#submit' => array('wrwa_flights_clear_submit'),
+    '#ajax' => array(
+      'callback' => 'wrwa_flights_clear_submit_ajax',
+      'wrapper' => $wrapper_id,
+      'effect' => 'fade',
+      'speed' => 'fast',
+      'event' => 'click',
+    ),
+  );
+
+  $form['results'] = array(
+    '#markup' => theme('status_messages')
+  );
+
+  $headers = array();
+  $headers[] = 'Airline';
+  $headers[] = 'Flight #';
+  $headers[] = ($type == 'arrivals') ? 'From' : 'To';
+  $headers[] = ($type == 'arrivals') ? 'Arriving' : 'Departing';
+  $headers[] = 'Gate';
+  if (($type == 'arrivals')) {
+    $headers[] = 'Bags';
+  }
+  $headers[] = 'Status';
+  $headers[] = 'Track Flight';
+
+  $form['results']['#markup'] .= theme(
+      'table__wrwa_flights',
+      array(
+        'header' => $headers,
+        'rows' => $flights,
+        'empty' => t('No Flights Found'),
+        'attributes' => array('class' => array('flights-list'))
+      )
+    );
+
+  $form['results']['#markup'] .= theme(
+    'wrwa_flights',
+    array(
+      'flights' => $flights,
+      'empty' => t('No Flights Found'),
+      'text_track_links' => $text_track_links,
+      'type' => $type
+    )
+  );
+
+  return $form;
+}
+
+function wrwa_flights_submit_ajax($form, &$form_state) {
+  return $form;
+}
+
+function wrwa_flights_clear_submit_ajax($form, &$form_state) {
+  if (!form_get_errors()) {
+    $form_id = $form['#form_id'];
+    // Get the unpopulated form.
+    $form = form_get_cache($form_state['input']['form_build_id'], $form_state);
+
+    // Rebuild it, without values
+    $form_state['input'] = array();
+    $form = form_builder($form_id, $form, $form_state);
+  }
+
+  return $form;
+}
+
+function wrwa_flights_clear_submit($form, &$form_state) {
+  $form_state['rebuild'] = TRUE;
+  $form_state['values'] = array();
+}
+
+/**
+ * Submit callback for Filters.
+ */
+function wrwa_flights_form_filter_submit(&$form, &$form_state) {
+  $form_state['rebuild'] = TRUE;
+}
+
+function wrwa_flights_get_airlines_options($airlines) {
+
+  $options = array();
+
+  foreach ($airlines as $code => $airline) {
+    $options[$code] = $airline['name'];
+  }
+
+  return $options;
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function wrwa_flights_block_info() {
+  $blocks = array();
+
+  $blocks['wrwa_flights_departures'] = array(
+    'info' => t('Wrwa flights: Wrwa flights departures'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+
+  $blocks['wrwa_flights_arrivals'] = array(
+    'info' => t('Wrwa flights: Wrwa flights arrivals'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function wrwa_flights_block_view($delta = '') {
+  $block = array();
+
+  switch ($delta) {
+    case 'wrwa_flights_departures':
+      $block['subject'] = '<none>';
+      $form = drupal_get_form('wrwa_flights_form', 'departures');
+      $block['content'] = array(
+        '#markup' => '<div>' . drupal_render($form) . '</div>',
+      );
+      break;
+    case 'wrwa_flights_arrivals':
+      $block['subject'] = '<none>';
+      $form = drupal_get_form('wrwa_flights_form', 'arrivals');
+      $block['content'] = array(
+        '#markup' => '<div>' . drupal_render($form) . '</div>',
+      );
+      break;
+  }
+
+  return $block;
+}
+

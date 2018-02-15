@@ -1,0 +1,27 @@
+.page-error {
+
+  .outer-wrapper {
+    background: image-url('bg/404-bg.jpg') no-repeat top center;
+    @include background-size(cover);
+  }
+
+  .content-wrapper {
+
+    h3 {
+      text-align: center;
+      color: #009bdf;
+    }
+
+    p {
+      color: #7b519c;
+      text-align: center;
+    }
+
+    a {
+      color: #009bdf;
+      font-family: $klavika-medium;
+      font-style: italic;
+      text-transform: uppercase;
+    }
+  }
+}

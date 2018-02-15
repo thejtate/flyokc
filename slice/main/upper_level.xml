@@ -1,0 +1,755 @@
+<?xml version="1.0"?>
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <img id="map" src="img/map/floor2/map.png" />
+    <img id="shadow" src="img/map/floor2/shadow.png" />
+    <img id="label" src="img/map/floor2/label.png" />
+    <legend>
+        <map>
+            <item mapid="2a6722a8-324f-4797-a5eb-b2a4eb77025c" id="1">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i12" />
+                <ico src="img/icons/ico12.png" />
+                <label>BAR</label>
+            </item>
+            <item mapid="ee21cd82-049d-4c0e-a3ee-e36fef8e8cf4" id="2">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i13" />
+                <ico src="img/icons/ico13.png" />
+                <label>RETAIL</label>
+            </item>
+            <item mapid="f5f8a21b-c05e-4cfc-8e97-9cdf4e6df372" id="3">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i16" />
+                <ico src="img/icons/ico16.png" />
+                <label>RESTROOMS</label>
+            </item>
+            <item mapid="3b33f77f-cd3c-4a14-8f2d-be2dd69067a3" id="4">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i15" />
+                <ico src="img/icons/ico15.png" />
+                <label>FOOD</label>
+            </item>
+            <item mapid="97e80c88-5517-470a-8431-fdcde3f6a236" id="5">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i14" />
+                <ico src="img/icons/ico14.png" />
+                <label>SHOE SHINE</label>
+            </item>
+            <item mapid="cc439237-10bf-4d7c-91b0-816a1ccf1544" id="6">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i20" />
+                <ico src="img/icons/ico22.png" />
+                <label>COFFEE/SNACKS</label>
+            </item>
+            <item mapid="da0d1ed8-e294-419e-b55c-1fbd8e30e564" id="7">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i5" />
+                <ico src="img/icons/ico5.png" />
+                <label>ESCALATOR</label>
+            </item>
+            <item mapid="df707691-9c78-4a35-97e6-69b081be30a3" id="8">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i4" />
+                <ico src="img/icons/ico4.png" />
+                <label>ELEVATOR</label>
+            </item>
+            <item mapid="d85733e2-170d-4a94-a6f7-9cb790aaf99a" id="9">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i17" />
+                <ico src="img/icons/ico17.png" />
+                <label>ATM MACHINE</label>
+            </item>
+            <item mapid="7b00f278-cb0f-4e9a-a97e-ee34bd20af6b" id="10">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i6" />
+                <ico src="img/icons/ico6.png" />
+                <label>INFORMATION</label>
+            </item>
+            <item mapid="9d422694-4a31-49a1-bd49-af0a830a2f74" id="11">
+                <clazz>AdvLocation</clazz>
+                <map_ico />
+                <ico src="img/icons/ico23.png" />
+                <label>TICKET COUNTER</label>
+            </item>
+            <item mapid="95ed567b-9b20-4709-820e-648237f44382" id="12">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i11" />
+                <ico src="img/icons/ico24.png" />
+                <label>GATES</label>
+            </item>
+            <item mapid="d40bfb9a-3e93-4e5e-8ee1-9faeebc304b7" id="13">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i9" />
+                <ico src="img/icons/ico9.png" />
+                <label>SECURITY CHECKPOINT</label>
+            </item>
+            <item mapid="8f41959b-4928-4856-8373-d236bd682efc" id="14">
+                <clazz>AdvLocation</clazz>
+                <map_ico clazz="i19" />
+                <ico src="img/icons/ico19.png" />
+                <label>YMCA</label>
+            </item>
+        </map>
+        <rental />
+        <carousels />
+        <gates>
+            <item id="fc1a7251-7b5e-43f3-86fd-bf3569c282d4">
+                <name>American</name>
+                <acro>AA</acro>
+                <gates>4,6,8</gates>
+            </item>
+            <item id="c54ee997-0d7b-400b-a671-2c16506c1b63">
+                <name>Delta</name>
+                <acro>DL</acro>
+                <gates>20,22,24</gates>
+            </item>
+            <item id="f7c33868-428e-498f-a049-b9ab57d091fe">
+                <name>Allegiant</name>
+                <acro>G4</acro>
+                <gates>1</gates>
+            </item>
+            <item id="c7053348-f38f-47e0-bb1b-34630465ea04">
+                <name>Southwest</name>
+                <acro>WN</acro>
+                <gates>14,16,18</gates>
+            </item>
+            <item id="04f4f5c7-ab60-4a40-ad8e-cd3312c76faa">
+                <name>United</name>
+                <acro>UA</acro>
+                <gates>3,5,9,10,11</gates>
+            </item>
+            <item id="d047aa55-a57b-40d8-b464-3f6a7671c115">
+                <name>Alaska</name>
+                <acro>AS</acro>
+                <gates>2</gates>
+            </item>
+        </gates>
+    </legend>
+    <locations>
+        <location id="6aee8e88-9f27-4fd2-9b82-bad4d6d8686a">
+            <x>185</x>
+            <y>201</y>
+            <caption>Cross Grain Brewhouse</caption>
+            <description>Open for breakfast, lunch and dinner. Enjoy artisanal foods, craft beers and specialty cocktails. Plus, there are plenty of power outlets to charge your devices!</description>
+            <scale>2</scale>
+            <legend id="1" />
+            <label>Cross Grain Brewhouse</label>
+            <font />
+        </location>
+        <location id="b5872140-c260-4e2d-b0cb-13fa3d2b9ea2">
+            <x>766</x>
+            <y>94</y>
+            <caption>The Redbud Lounge</caption>
+            <description>Full service bar and lounge with a variety of wines, popular liquors, traditional “pub grub”, and the nation’s most popular beers and ales.</description>
+            <scale>2</scale>
+            <legend id="1" />
+            <label>The Redbud Lounge</label>
+            <font />
+        </location>
+        <location id="b26c7911-0b43-4645-bda3-29694bf57cd0">
+            <x>172</x>
+            <y>272</y>
+            <caption>POPS East</caption>
+            <description>Inspired by the newest, coolest landmark along historic Route 66, POPS features a broad assortment of products including newspapers, magazine, books, convenience items, souvenirs and of course, soda pop.
+            </description>
+            <scale>2</scale>
+            <legend id="2" />
+            <label>POPS East</label>
+            <font />
+        </location>
+        <location id="d72d27f5-1245-4b95-a618-5de269fc2f35">
+            <x>328</x>
+            <y>307</y>
+            <caption>CNBC Express</caption>
+            <description>Basic travel necessities including magazines, books, newspapers, snacks, soda, and electronics.</description>
+            <scale>2</scale>
+            <legend id="2" />
+            <label>CNBC Express</label>
+            <font />
+        </location>
+        <location id="4afd9238-e5d2-4e04-874b-93529b7137c0">
+            <x>408</x>
+            <y>228</y>
+            <caption>CNBC</caption>
+            <description>Travel necessities including magazines, books, newspapers, snacks, soda, and electronics, along with souvenirs, apparel, luggage and gourmet food.</description>
+            <scale>2</scale>
+            <legend id="2" />
+            <label>CNBC Concourse</label>
+            <font />
+        </location>
+        <location id="3eee31c9-c97f-4102-93a8-0c66451906cd">
+            <x>436</x>
+            <y>230</y>
+            <caption>EA Sports</caption>
+            <description>EA Sports, one of the world’s most innovative and interactive global brands, offers a one-of-a-kind interactive sports experience. EA Sports allows every customer the chance to “Step on the Field of Play.”  Gamers and non-gamers alike will find the latest EA Sports officially licensed apparel from the teams that make Oklahoma City great.</description>
+            <scale>2</scale>
+            <legend id="2" />
+            <label>EA Sports</label>
+            <font />
+        </location>
+        <location id="ded74818-dac8-4f3b-beb8-42f127e3f291">
+            <x>794</x>
+            <y>129</y>
+            <caption>InMotion Entertainment</caption>
+            <description>InMotion provide business &amp; leisure travelers with the most up- to-date digitally equipped devices, along with InMotion’s trademarked PlayPoint digital download stations. </description>
+            <scale>2</scale>
+            <legend id="2" />
+            <label>InMotion Entertainment</label>
+            <font />
+        </location>
+        <location id="ded74818-dac8-4f3b-beb8-42f127e3f292">
+            <x>816</x>
+            <y>121</y>
+            <caption>Brighton Collectibles</caption>
+            <description>A specialty store featuring Brighton’s exquisite collection of accessories including handbags, leather goods, watches, fragrances, jewelry, home accessories and more.
+
+                Open Daily
+                5:00am-7:00/7:30pm
+            </description>
+            <scale>2</scale>
+            <legend id="2" />
+            <label>Brighton Collectibles</label>
+            <font />
+        </location>
+        <location id="594b2634-fbf9-4ecf-adfd-b2b97873ee18">
+            <x>839</x>
+            <y>113</y>
+            <caption>POPS West</caption>
+            <description>Inspired by the newest, coolest landmark along historic Route 66, POPS features a broad assortment of products including newspapers, magazine, books, convenience items, souvenirs and of course, soda pop.</description>
+            <scale>2</scale>
+            <legend id="2" />
+            <label>POPS West</label>
+            <font />
+        </location>
+        <location id="75cb6122-3411-40c5-bda7-de1fa9afff1c">
+            <x>862</x>
+            <y>106</y>
+            <caption>Bricktown Square</caption>
+            <description>Bricktown Square is designed with the original and historic location in mind, and provides an assortment of souvenirs and merchandise from the area’s most famous local attractions including local apparel and gear, giftware and edibles.</description>
+            <scale>2</scale>
+            <legend id="2" />
+            <label>Bricktown Square</label>
+            <font />
+        </location>
+        <location id="abfac94c-13df-47e6-b02e-6fc59dbb0940">
+            <x>491</x>
+            <y>232</y>
+            <caption>Public Restrooms</caption>
+            <description>Men's &amp; Women's Restrooms.  A family restroom is located in between the two.</description>
+            <scale>2</scale>
+            <legend id="3" />
+            <label>Public Restrooms2C</label>
+            <font />
+        </location>
+        <location id="66c06320-ad76-4510-8322-a3485beff55f">
+            <x>409</x>
+            <y>261</y>
+            <caption>Public Restrooms</caption>
+            <description>Men's &amp; Women's Restrooms.  A family restroom is located in between the two.</description>
+            <scale>2</scale>
+            <legend id="3" />
+            <label>Public Restrooms6T</label>
+            <font />
+        </location>
+        <location id="e0dd4d68-f963-42b0-8ee7-020e5ed4abfc">
+            <x>178</x>
+            <y>317</y>
+            <caption>Public Restrooms</caption>
+            <description>Men's &amp; Women's Restrooms.  A family restroom is located in between the two.</description>
+            <scale>2</scale>
+            <legend id="3" />
+            <label>Public Restrooms5T</label>
+            <font />
+        </location>
+        <location id="27aafe08-9f18-4961-a74b-6d6a544fa49b">
+            <x>210</x>
+            <y>257</y>
+            <caption>Public Restrooms &amp; Nursery</caption>
+            <description>Men's &amp; Women's Restrooms.  A family restroom is located in between the two.  A small nursery offers nursing mothers a chair and sofa.</description>
+            <scale>2</scale>
+            <legend id="3" />
+            <label>Public Restrooms1C</label>
+            <font />
+        </location>
+        <location id="28a128ab-66e7-46a5-866f-415d61667cde">
+            <x>760</x>
+            <y>140</y>
+            <caption>Public Restrooms</caption>
+            <description>Men's Restroom.  A family restroom is located next to the men's restroom.</description>
+            <scale>2</scale>
+            <legend id="3" />
+            <label>Public Restrooms4C</label>
+            <font />
+        </location>
+        <location id="55f533e8-53fe-447b-9b4e-3ec523d719cd">
+            <x>735</x>
+            <y>104</y>
+            <caption>Public Restrooms</caption>
+            <description>Women's Restroom.  A family restroom is located across the hallway next to the men's restroom.</description>
+            <scale>2</scale>
+            <legend id="3" />
+            <label>Public Restrooms3C</label>
+            <font />
+        </location>
+        <location id="8f417d49-7d61-4074-b094-a59aa517f198">
+            <x>239</x>
+            <y>248</y>
+            <caption>Sonic</caption>
+            <description>Made to order burgers, chicken sandwiches, coneys, wraps, Toaster sandwiches, breakfast burritos, tots, French fries, onion rings, Sonic Blasts, and banana splits.</description>
+            <scale>2</scale>
+            <legend id="4" />
+            <label>Sonic</label>
+            <font />
+        </location>
+        <location id="234d6c4b-8f76-45cf-9e2e-830b01171799">
+            <x>267</x>
+            <y>241</y>
+            <caption>Moe's &amp; Salt Lick Barbeque</caption>
+            <description>Moe's Southwest Grill: serves a variety of southwest fare, including burritos, salads, nachos and quesadillas.
+                Salt Lick Barbeque: briskets, smoked sausages, turkey, and split chickens.</description>
+            <scale>2</scale>
+            <legend id="4" />
+            <label> Moe's Salt Lick</label>
+            <font />
+        </location>
+        <location id="d17a2ce8-ef33-45a4-afa7-58e5b0f4ead7">
+            <x>295</x>
+            <y>235</y>
+            <caption>Schlotsky's</caption>
+            <description>Serves hot sandwiches on fresh baked bread, specialty pizzas, wraps, freshly tossed salads, and gourmet soups.</description>
+            <scale>2</scale>
+            <legend id="4" />
+            <label>Schlotsky's</label>
+            <font />
+        </location>
+        <location id="fa0b1270-39b1-4641-bf71-7d56e8e22666">
+            <x>822</x>
+            <y>76</y>
+            <caption>Route 66 Grill</caption>
+            <description>Made to order breakfast bagels, sandwiches and burritos; freshly prepared salads, wraps, deli sandwiches, burgers, hot dogs, tuna filet sandwiches and Route 66's famous Ribeye sandwich.</description>
+            <scale>2</scale>
+            <legend id="4" />
+            <label>Route 66 Grill</label>
+            <font />
+        </location>
+        <location id="f8e3d439-30af-4133-848d-dd845c43c419">
+            <x>466</x>
+            <y>233</y>
+            <caption>Harold's Shoe Shine</caption>
+            <description>Located between EA Sports and the Coffee Bean and Tea Leaf</description>
+            <scale>2</scale>
+            <legend id="5" />
+            <label>Harold's</label>
+            <font />
+        </location>
+        <location id="6ea1e193-6489-415f-b96f-3b31622a06f7">
+            <x>209</x>
+            <y>351</y>
+            <caption>Cafe Oklahoma</caption>
+            <description>Gourmet coffees, espresso, cappuccino, latte, coffee shakes, milk shakes and fruit smoothies.  Food offerings include breakfast sandwiches, bagels, muffins, pizza, ciabatta and baguettes. </description>
+            <scale>2</scale>
+            <legend id="6" />
+            <label>Cafe Oklahoma</label>
+            <font />
+        </location>
+        <location id="f67d7565-6967-4e8a-a745-47818587e507">
+            <x>795</x>
+            <y>86</y>
+            <caption />
+            <description />
+            <scale>2</scale>
+            <legend id="6" />
+            <label>coffee/snacks @Route66 Grill</label>
+            <font />
+        </location>
+        <location id="d4f26c70-defe-4123-88d0-283221c130af">
+            <x>144</x>
+            <y>333</y>
+            <caption>Escalator/Stairs</caption>
+            <description>Escalators connecting first and second levels. </description>
+            <scale>2</scale>
+            <legend id="7" />
+            <label>Escalator/Stairs</label>
+            <font />
+        </location>
+        <location id="bc9ae6c8-5d57-4d8c-a26a-dc5d03540e79">
+            <x>230</x>
+            <y>338</y>
+            <caption>Escalator/Stairs</caption>
+            <description>Escalators connecting first and second levels. </description>
+            <scale>2</scale>
+            <legend id="7" />
+            <label>Escalator/Stairs</label>
+            <font />
+        </location>
+        <location id="bb14102f-7af3-4a32-b301-b00a6b024b0c">
+            <x>307</x>
+            <y>311</y>
+            <caption>Escalator/Stairs</caption>
+            <description>Escalators connecting first and second levels. </description>
+            <scale>2</scale>
+            <legend id="7" />
+            <label>Escalator/Stairs</label>
+            <font />
+        </location>
+        <location id="c3b76997-17a4-4e48-919c-a5a529af5d5e">
+            <x>356</x>
+            <y>260</y>
+            <caption>Escalator/Stairs</caption>
+            <description>Escalators connecting first and second levels. </description>
+            <scale>2</scale>
+            <legend id="7" />
+            <label>Escalator/Stairs</label>
+            <font />
+        </location>
+        <location id="7bcf84e8-ea01-4187-8cdd-3c1355d380fc">
+            <x>161</x>
+            <y>300</y>
+            <caption>Elevator</caption>
+            <description>Freight elevator to all levels.</description>
+            <scale>2</scale>
+            <legend id="8" />
+            <label>Elevator Freight</label>
+            <font />
+        </location>
+        <location id="080aea2f-4bfb-45ea-b827-46491a74ad3b">
+            <x>328</x>
+            <y>240</y>
+            <caption>Elevator</caption>
+            <description>Elevator to baggage claim, ticketing and gates, and administrative offices.</description>
+            <scale>2</scale>
+            <legend id="8" />
+            <label>Elevator West</label>
+            <font />
+        </location>
+        <location id="c8ce4a06-21af-41ca-a926-bd5b5f700750">
+            <x>257</x>
+            <y>327</y>
+            <caption>Elevator</caption>
+            <description>Elevator to parking tunnel, baggage and ticketing.</description>
+            <scale>2</scale>
+            <legend id="8" />
+            <label>Elevator Center</label>
+            <font />
+        </location>
+        <location id="c8ce4a06-21af-41ca-a926-bd5adf700750">
+            <x>123</x>
+            <y>337</y>
+            <caption>Elevator</caption>
+            <description>Elevator to all levels.</description>
+            <scale>2</scale>
+            <legend id="8" />
+            <label>Elevator</label>
+            <font />
+        </location>
+        <location id="a4224136-7553-4abe-bdcb-f63e5fe32a5e">
+            <x>315</x>
+            <y>260</y>
+            <caption>ATM</caption>
+            <description>Services by Bank of America and MidFirst Bank</description>
+            <scale>2</scale>
+            <legend id="9" />
+            <label>ATM Ticket Lobby</label>
+            <font />
+        </location>
+        <location id="47004f43-f8d8-486c-a7a9-2bd78c181332">
+            <x>395</x>
+            <y>200</y>
+            <caption>ATM</caption>
+            <description>Services by MidFirst Bank</description>
+            <scale>2</scale>
+            <legend id="9" />
+            <label>ATM Concourse</label>
+            <font />
+        </location>
+        <location id="47004f43-f8d8-486c-a7a9-2bd78c181333">
+            <x>550</x>
+            <y>215</y>
+            <caption>Coffee Bean and Tea Leaf</caption>
+            <description />
+            <scale>2</scale>
+            <legend id="6" />
+            <label>Coffee Bean OKC</label>
+            <font />
+        </location>
+        <location id="29d04eaa-f174-4bf3-a636-ca811916127a">
+            <x>277</x>
+            <y>319</y>
+            <caption>Information &amp; Paging</caption>
+            <description>Information and paging</description>
+            <scale>2</scale>
+            <legend id="10" />
+            <label>Information</label>
+            <font />
+        </location>
+        <location id="25c0f14a-126b-45b9-8748-596b0f365811">
+            <x>108</x>
+            <y>361</y>
+            <caption>Delta Air Lines</caption>
+            <description>Ticket Counter Hours:
+                Daily | 4:15AM - 6:00PM </description>
+            <scale>1.7</scale>
+            <legend id="11" />
+            <label>DL</label>
+            <font family="Klavika Basic Bold" size="14" />
+        </location>
+        <location id="131e265c-988b-4647-aa89-16c3d388abf0">
+            <x>206</x>
+            <y>296</y>
+            <caption>Southwest Airlines</caption>
+            <description>Ticket Counter Hours:
+                Sunday-Friday | 5:00AM - 8:00PM
+                Saturday | 5:00AM - 6:30PM
+            </description>
+            <scale>1.7</scale>
+            <legend id="11" />
+            <label>WN</label>
+            <font family="Klavika Basic Bold" size="14" />
+        </location>
+        <location id="426a3537-8975-4376-b6d9-21fd459b1d46"><!-- 1 -->
+            <x>242</x>
+            <y>284</y>
+            <caption>YMCA Military Welcome Center</caption>
+            <description />
+            <scale base="0.70">1.7</scale>
+            <legend id="14" />
+            <label></label>
+            <font family="Klavika Basic Bold" size="14" />
+        </location>
+        <location id="6f2ffa47-3548-4c1f-bcd1-ec715e65e116">
+            <x>283</x>
+            <y>271</y>
+            <caption>American Airlines</caption>
+            <description>Ticket Counter Hours:
+                Daily | 4:00AM - 6:30PM
+            </description>
+            <scale>1.7</scale>
+            <legend id="11" />
+            <label>AA</label>
+            <font family="Klavika Basic Bold" size="14" />
+        </location>
+        <location id="ad3331da-7dca-47a8-a5fd-1a52e00a2ad9">
+            <x>440</x>
+            <y>263</y>
+            <caption>Allegiant Air</caption>
+            <description>Ticket Counter Hours:
+                2 hours before scheduled flight to 1 hour after each departure</description>
+            <scale>1.7</scale>
+            <legend id="11" />
+            <label>G4</label>
+            <font family="Klavika Basic Bold" size="14" />
+        </location>
+        <location id="2dfa5949-493b-409e-ae73-18a6b049de1fa">
+            <x>480</x>
+            <y>268</y>
+            <caption>Alaska Airlines</caption>
+            <description>Ticket Counter Hours:
+                Daily | 3:00PM - 5:30PM</description>
+            <scale>1.7</scale>
+            <legend id="11" />
+            <label>AS</label>
+            <font family="Klavika Basic Bold" size="14" />
+        </location>
+        <location id="2dfa5949-493b-409e-ae73-18a6b049de1f">
+            <x>519</x>
+            <y>276</y>
+            <caption>United Airlines</caption>
+            <description>Ticket Counter Hours:
+                Daily | 4:00AM - 6:00PM</description>
+            <scale>1.7</scale>
+            <legend id="11" />
+            <label>UA</label>
+            <font family="Klavika Basic Bold" size="14" />
+        </location>
+        <location id="b48b3d1d-af06-4d6f-b7f9-583184bcefd7">
+            <x>21</x>
+            <y>282</y>
+            <caption>Gate 24</caption>
+            <description>Delta Air Lines</description>
+            <scale>2</scale>
+            <legend id="12" />
+            <label>24</label>
+            <font family="Klavika Basic Bold" size="18" />
+        </location>
+        <location id="7cf62645-abc4-413f-be47-acaaea988d33">
+            <x>58</x>
+            <y>251</y>
+            <caption>Gate 22</caption>
+            <description>Delta Air Lines</description>
+            <scale>2</scale>
+            <legend id="12" />
+            <label>22</label>
+            <font family="Klavika Basic Bold" size="18" />
+        </location>
+        <location id="2d1c4fef-66ca-4182-869a-3410b915bde3">
+            <x>112</x>
+            <y>218</y>
+            <caption>Gate 20</caption>
+            <description>Delta Air Lines</description>
+            <scale>2</scale>
+            <legend id="12" />
+            <label>20</label>
+            <font family="Klavika Basic Bold" size="18" />
+        </location>
+        <location id="9d904d18-794c-4bc8-b326-c95518badc9e">
+            <x>249</x>
+            <y>171</y>
+            <caption>Gate 18</caption>
+            <description>Southwest Airlines</description>
+            <scale>2</scale>
+            <legend id="12" />
+            <label>18</label>
+            <font family="Klavika Basic Bold" size="18" />
+        </location>
+        <location id="e3825f6c-5359-46e7-94e9-547dbcfc0d5a">
+            <x>317</x>
+            <y>162</y>
+            <caption>Gate 16</caption>
+            <description>Southwest Airlines</description>
+            <scale>2</scale>
+            <legend id="12" />
+            <label>16</label>
+            <font family="Klavika Basic Bold" size="18" />
+        </location>
+        <location id="24277e41-3335-45cc-862c-2ad786dba0b3">
+            <x>384</x>
+            <y>160</y>
+            <caption>Gate 14</caption>
+            <description>Southwest Airlines</description>
+            <scale>2</scale>
+            <legend id="12" />
+            <label>14</label>
+            <font family="Klavika Basic Bold" size="18" />
+        </location>
+        <location id="66495e23-b9f8-4869-a7b8-5cfdb9b4cfd8">
+            <x>634</x>
+            <y>123</y>
+            <caption>Gate 12</caption>
+            <description>Various Commercial Airlines and Charters</description>
+            <scale>2</scale>
+            <legend id="12" />
+            <label>12</label>
+            <font family="Klavika Basic Bold" size="18" />
+        </location>
+        <location id="7b22edaf-a612-4a40-bc6b-361f0522d081">
+            <x>693</x>
+            <y>103</y>
+            <caption>Gate 10</caption>
+            <description>United Airlines</description>
+            <scale>2</scale>
+            <legend id="12" />
+            <label>10</label>
+            <font family="Klavika Basic Bold" size="18" />
+        </location>
+        <location id="f0569ec0-e513-4e03-b87c-356ba931861f">
+            <x>846</x>
+            <y>53</y>
+            <caption>Gate 8</caption>
+            <description>American Airlines</description>
+            <scale>2</scale>
+            <legend id="12" />
+            <label>8</label>
+            <font family="Klavika Basic Bold" size="18" />
+        </location>
+        <location id="1c1280fa-a3ca-4c54-ad5a-92b26c31d278">
+            <x>907</x>
+            <y>32</y>
+            <caption>Gate 6</caption>
+            <description>American Airlines</description>
+            <scale>2</scale>
+            <legend id="12" />
+            <label>6</label>
+            <font family="Klavika Basic Bold" size="18" />
+        </location>
+        <location id="244a1fd3-55a1-4630-9125-8d91c0b28e25">
+            <x>968</x>
+            <y>12</y>
+            <caption>Gate 4</caption>
+            <description>American Airlines</description>
+            <scale>2</scale>
+            <legend id="12" />
+            <label>4</label>
+            <font family="Klavika Basic Bold" size="18" />
+        </location>
+        <location id="7ace86b4-5bfa-4d8d-9d74-b89747244db5">
+            <x>1007</x>
+            <y>24</y>
+            <caption>Gate 2</caption>
+            <description>Alaska Airlines</description>
+            <scale>2</scale>
+            <legend id="12" />
+            <label>2</label>
+            <font family="Klavika Basic Bold" size="18" />
+        </location>
+        <location id="0dc7d033-6f60-4b94-b4fa-d71a0dcfeb4f">
+            <x>1027</x>
+            <y>58</y>
+            <caption>Gate 1</caption>
+            <description>Allegiant Air</description>
+            <scale>2</scale>
+            <legend id="12" />
+            <label>1</label>
+            <font family="Klavika Basic Bold" size="18" />
+        </location>
+        <location id="4f3bf2b7-a2fc-4f69-b4f5-6e72aad1cf5a">
+            <x>980</x>
+            <y>82</y>
+            <caption>Gate 3</caption>
+            <description>United Airlines</description>
+            <scale>2</scale>
+            <legend id="12" />
+            <label>3</label>
+            <font family="Klavika Basic Bold" size="18" />
+        </location>
+        <location id="2b9a189b-4819-42ab-a7b7-98d9cd10419a">
+            <x>921</x>
+            <y>102</y>
+            <caption>Gate 5</caption>
+            <description>United Airlines</description>
+            <scale>2</scale>
+            <legend id="12" />
+            <label>5</label>
+            <font family="Klavika Basic Bold" size="18" />
+        </location>
+        <location id="beec2b24-e072-43a2-aa1d-f9715a0d71ea">
+            <x>734</x>
+            <y>163</y>
+            <caption>Gate 9</caption>
+            <description>United Airlines</description>
+            <scale>2</scale>
+            <legend id="12" />
+            <label>9</label>
+            <font family="Klavika Basic Bold" size="18" />
+        </location>
+        <location id="476b94e8-3f01-416e-a1f2-b63d4a2337eb">
+            <x>675</x>
+            <y>184</y>
+            <caption>Gate 11</caption>
+            <description>United Airlines</description>
+            <scale>2</scale>
+            <legend id="12" />
+            <label>11</label>
+            <font family="Klavika Basic Bold" size="18" />
+        </location>
+        <location id="770feaa9-2568-4dee-9b03-a6beeabcae84">
+            <x>114</x>
+            <y>311</y>
+            <caption>Security Checkpoint</caption>
+            <description>East Security Checkpoint</description>
+            <scale>2</scale>
+            <legend id="13" />
+            <label>Security Checkpoint</label>
+            <font />
+        </location>
+        <location id="2241a134-ea19-43da-93d0-a493b4174faf">
+            <x>359</x>
+            <y>231</y>
+            <caption>Security Checkpoint</caption>
+            <description>West Security Checkpoint</description>
+            <scale>2</scale>
+            <legend id="13" />
+            <label>Security Checkpoint</label>
+            <font />
+        </location>
+    </locations>
+</data>

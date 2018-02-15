@@ -1,0 +1,41 @@
+.page-arrivals {
+
+  .content-wrapper {
+    padding-bottom: 130px;
+
+    .wrwa-flights-filters-form {
+
+      .flights-list, .items {
+        display: none;
+      }
+
+      &.blocks .items {
+        display: block;
+      }
+
+      &.list .flights-list {
+        display: table;
+      }
+    }
+
+    .filter-items {
+
+      .form-type-select {
+        float: left;
+        margin: 0 50px 20px 0;
+      }
+
+      .tags {
+        float: left;
+      }
+
+      .view-type {
+        float: right;
+      }
+    }
+
+    .item {
+      max-width: 313px;
+    }
+  }
+}

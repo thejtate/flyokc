@@ -1,0 +1,15 @@
+.section-with-img {
+  margin: -20px 0 20px;
+  z-index: 2;
+
+  .img {
+    float: left;
+    margin-right: 25px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .text {
+    padding: 156px 0;
+  }
+}

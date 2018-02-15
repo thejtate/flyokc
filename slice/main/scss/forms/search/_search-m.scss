@@ -1,0 +1,23 @@
+.form-search {
+  top: 202px;
+  width: 640px;
+
+  input:not([type=submit]):not([type=checkbox]):not([type=radio]) {
+    font-size: 44px;
+  }
+
+  .form-actions {
+    bottom: -18px;
+
+    .form-submit {
+      @include oneline-sprite-box($icons, icon-plane-big);
+    }
+  }
+
+  .search-list {
+
+    .btn-show-all {
+      padding: 4px 10px;
+    }
+  }
+}

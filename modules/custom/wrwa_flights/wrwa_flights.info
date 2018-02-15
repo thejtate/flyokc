@@ -1,0 +1,8 @@
+name = wrwa_flights
+description = WRWA flights
+package = wrwa
+core = 7.x
+version = 7.x-1.x
+
+;files[] =
+;dependencies[] = 

@@ -1,0 +1,83 @@
+.b-map .scale-block-wrapper {
+  position: absolute;
+  z-index: 1;
+  width: 54px;
+  height: 120px;
+  right: 20px;
+  bottom: 65px;
+  display: none;
+
+  .desktop & {
+    right: 276px;
+    bottom: 85px;
+    display: none;
+
+    @media (min-width: 1200px) {
+      display: block;
+    }
+  }
+
+  .level-car-rental-is-active & {
+    display: none;
+  }
+
+  span {
+    position: absolute;
+    display: block;
+  }
+
+  .scale-btn-positive, .scale-btn-negative, .scale-btn-progress {
+    left: 50%;
+  }
+
+  .scale-btn-positive, .scale-btn-negative {
+    width: 16px;
+    height: 16px;
+    background: #7b519c;
+    overflow: hidden;
+    @include border-radius(50%);
+    font-size: 21px;
+    color: #fff;
+    font-family: $klavika-light;
+    text-align: center;
+    cursor: pointer;
+    @include translate(-50%, 0);
+    @include transition(color .3s, background .3s);
+    transform-origin: center center;
+
+    &:hover {
+      background: #fff;
+      color: #e85757;
+    }
+  }
+
+  .scale-btn-positive {
+    bottom: calc(100% + 14px);
+    line-height: .65;
+  }
+
+  .scale-btn-negative {
+    top: calc(100% + 14px);
+    line-height: .7;
+  }
+
+  .scale-progress {
+    left: 50%;
+    top: 50%;
+    @include translate(-50%, -50%);
+    width: 2px;
+    height: 100%;
+    background: #9b9b9b;
+  }
+
+  .scale-btn-progress {
+    width: 30px;
+    height: 10px;
+    background: #fff;
+    @include border-radius(4px);
+    top: 0;
+    @include box-shadow(1px 1px 8px rgba(0, 0, 0, .6));
+    @include transition(top .6s);
+    @include translate(-50%, -50%);
+  }
+}

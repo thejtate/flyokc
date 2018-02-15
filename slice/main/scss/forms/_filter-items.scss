@@ -1,0 +1,18 @@
+.filter-items {
+  @include clearfix();
+
+  .form-type-select {
+    font-size: 13px;
+    font-family: $klavika-italic;
+
+    label {
+      display: inline-block;
+      margin-right: 10px;
+    }
+  }
+
+  .views-widget {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}

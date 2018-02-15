@@ -1,0 +1,158 @@
+.subscribe-form, .unsubscribe-form {
+
+  .form-item {
+    margin: 0 0 20px;
+
+    label {
+      margin-bottom: 5px;
+    }
+  }
+
+  label {
+    font-size: 14px;
+
+    @media (min-width: $width-middle) {
+      font-size: 18px;
+    }
+  }
+
+  .form-item-airline, .form-item-flight, .form-item-email, .form-item-email-confirm {
+
+    @media (min-width: $width-middle) {
+      width: calc(50% - 20px);
+      float: left;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    .select2-container {
+      width: 100%;
+    }
+  }
+
+  .unsubscribe-info {
+    margin-bottom: 20px;
+
+    @media (min-width: $width-middle) {
+      padding: 0 10px;
+    }
+  }
+
+  .form-item-date {
+    clear: both;
+    @include clearfix();
+    width: 100%;
+
+    @media (min-width: $width-middle) {
+
+      label {
+        padding: 0 10px;
+      }
+    }
+
+    .date-padding {
+      float: none;
+    }
+
+    .form-item {
+      display: block;
+      margin: 0 10px 0 0;
+
+      label {
+        padding: 0;
+      }
+
+      @media (min-width: $width-middle) {
+        width: calc(33.33% - 20px);
+        float: left;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 0;
+      }
+    }
+
+    .select2-container {
+      width: 100%;
+      min-width: 100px;
+    }
+  }
+
+  .form-type-radios {
+    clear: both;
+    @include clearfix();
+
+    @media (min-width: $width-middle) {
+      padding: 0 10px;
+    }
+
+    .form-item {
+      margin-bottom: 10px;
+    }
+
+    input {
+      position: relative;
+      top: -1px;
+    }
+
+    .form-radios label {
+      margin-left: 5px;
+    }
+  }
+
+  .form-submit {
+    color: #fff;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 21px;
+    padding: 12px 30px;
+    border: none;
+    text-transform: uppercase;
+    @include border-radius(0);
+    @include background-image(linear-gradient(top, #1b9ad6 0%, #1b9ad6 50%, #088eca 50%, #088eca 100%));
+
+    @media (min-width: $width-middle) {
+      margin: 0 10px;
+    }
+
+    &:hover {
+      @include background-image(linear-gradient(top, #088eca 0%, #088eca 50%, #1b9ad6 50%, #1b9ad6 100%));
+    }
+  }
+}
+
+.subscribe-form {
+  margin-bottom: 20px;
+
+  @media (min-width: $width-tablet) {
+    float: left;
+    width: 50%;
+    padding-right: 20px;
+    border-right: 1px solid #1798d5;
+  }
+}
+
+.unsubscribe-form {
+
+  @media (min-width: $width-tablet) {
+    float: right;
+    width: 50%;
+    padding-left: 20px;
+  }
+
+  .form-submit {
+    clear: both;
+    display: block;
+  }
+}
+
+.captcha {
+  @include clear-box();
+
+  @media (min-width: $width-tablet) {
+    padding: 0 10px;
+  }
+
+  a {
+    color: #088eca;
+  }
+}

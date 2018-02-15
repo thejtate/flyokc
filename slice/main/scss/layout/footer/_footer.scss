@@ -1,0 +1,151 @@
+.site-footer {
+  text-align: center;
+  background: #088eca;
+  font-size: 14px;
+  color: #fff;
+  z-index: 15;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  a {
+    color: #fff;
+  }
+
+  .page-map & {
+    display: none;
+  }
+
+  .menu, .social {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .menu {
+    padding: 0;
+    text-align: center;
+
+    & > li {
+      display: inline-block;
+      vertical-align: middle;
+      position: relative;
+
+      & > a {
+        padding: 20px 16px;
+      }
+
+      & > ul ul {
+        bottom: 0;
+        left: 100%;
+      }
+    }
+
+    ul {
+      @include transition(all .3s);
+      visibility: hidden;
+      opacity: 0;
+      background: #088eca;
+      position: absolute;
+      left: 0;
+      bottom: 100%;
+      width: 194px;
+      text-align: center;
+      font-family: $klavika-regular;
+      padding: 12px 0;
+      @include transform(translate(0, 5px));
+      z-index: 5;
+
+      li {
+        display: block;
+      }
+
+      a {
+        padding: 5px 17px;
+      }
+    }
+
+    a {
+      display: block;
+      text-decoration: none;
+    }
+
+    li {
+
+      &.active, &.active-trail, &:hover {
+
+        & > a {
+          background: #088eca;
+        }
+      }
+
+      &:hover > ul, li:hover ul {
+        opacity: 1;
+        visibility: visible;
+        @include transform(translate(0, 0));
+
+        li {
+
+          &.active > a, &.active-trail > a, &:hover > a {
+            background: #1798d5;
+          }
+        }
+      }
+    }
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+
+    li {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .social {
+    margin-left: 10px;
+    padding: 5px 0;
+
+    li {
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 8px;
+    }
+
+    a {
+      display: block;
+      font-size: 18px;
+
+      &:hover {
+        opacity: .7;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .footer-top {
+    background: #1798d5;
+  }
+
+  .footer-bottom {
+    padding: 32px 0;
+    font-family: $klavika-light;
+
+    .logo, p {
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0;
+    }
+
+    p {
+      margin-left: 5px;
+    }
+  }
+
+  a.active {
+    color: #fff;
+  }
+}

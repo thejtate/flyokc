@@ -1,0 +1,206 @@
+#main .tabs {
+  position: absolute;
+  top: -14px;
+  z-index: 11;
+  left: 20px;
+}
+
+.page-arrivals #main .tabs {
+  top: 2px;
+}
+
+.front #main .tabs {
+  top: 28px;
+}
+
+.page-map #main .tabs {
+  top: 43px;
+}
+
+@media (max-width: 1098px) {
+  .page-map #main .tabs {
+    top: 34px;
+  }
+}
+
+.field-collection-view {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.site-footer .region-footer {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.site-container.default-page {
+  padding-top: 150px;
+  color: #1a99d6;
+}
+
+body:not(.front) .site-header {
+  /*background: #088ECA;*/
+}
+
+body:not(.front) h2 {
+  font-size: 30px;
+  margin: 0 0 5px;
+}
+
+body:not(.front) .view-content > .views-row {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+body ul.tabs a, body ul.field-collection-view-links a{
+  color: #555;
+}
+
+.front .action-links {
+  display: none;
+}
+
+section.section-gallery .field-collection-container {
+  margin: 0;
+}
+
+/* Field collection buttons */
+.field-collection-container,
+.field-collection-view {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.field-collection-view ul.field-collection-view-links {
+  margin-top: 0;
+}
+
+.field-collection-container,
+.field-collection-container .field-item {
+  margin-bottom: 0;
+}
+
+ul.field-collection-view-links li {
+  float: left;
+  margin-left: 5px;
+}
+
+ul.field-collection-view-links li a {
+  padding: 2px 5px !important;
+  font-size: 11px;
+  text-transform: uppercase;
+  margin-right: 0;
+  color: #333;
+  border-style: solid;
+  background-color: #DDD;
+  border-color: #BBB;
+  border-width: 1px;
+  height: auto;
+  display: block;
+  text-decoration: none;
+}
+
+.action-links-field-collection-add li a {
+  color: #333;
+  border-style: solid solid solid;
+  background-color: #DDD;
+  border-color: #BBB;
+  border-width: 1px;
+  height: auto;
+  margin-right: 0.5em;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+
+.page-airline-contacts .items .item {
+  position: relative;
+}
+
+.page-airline-contacts .items .item ul.field-collection-view-links {
+  position: absolute;
+  z-index: 3;
+  bottom: 0;
+  right: 0;
+}
+
+.content-wrapper .tabs-wrapper.style-a .tabs-content ul.field-collection-view-links li {
+  margin-left: 5px;
+}
+
+/* Media contact */
+.node-page-with-sections .items-box .item {
+  position: relative;
+}
+
+.node-page-with-sections .items-box .item .field-collection-view-links {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+/* Solicitation */
+.page-solicitations .file .file-icon,
+.page-solicitations .file .file-size {
+  display: none;
+}
+
+.content-wrapper.site-container.tabs {
+  padding: 0;
+}
+
+.page-jetsets .content-wrapper p span.date-display-single {
+  margin-right: 0;
+  display: block;
+}
+
+/* Share this */
+.stButton span.stMainServices {
+  height: 25px;
+}
+
+.node-art-project .st_twitter_button,
+.node-projects .st_fblike_button,
+.node-jet-sets-event .st_fblike_button,
+.node-news .st_fblike_button {
+  display: none;
+}
+
+.node-art-project .st_fblike_button {
+  float: left;
+}
+
+/* Volunteer webform */
+.form.form-volunteer .row .webform-calendar[type="image"] {
+  width: auto;
+}
+
+.form.form-volunteer .row label[for="edit-submitted-date"] {
+  margin-bottom: 18px;
+}
+
+.content-wrapper .articles-items .item .text p.link-wrap {
+  margin-top: 15px;
+
+}
+
+.view-homepage-jet-sets .jet-sets-default p {
+  font-size: 1.17em;
+}
+
+.view-homepage-jet-sets .jet-sets-default a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.bean-block-tabs.tabs{
+    width:980px;
+    margin: 0 auto;
+    padding-left: 40px;
+}
+
+.page-search .top-navigation h1 {
+  cursor: pointer;
+}

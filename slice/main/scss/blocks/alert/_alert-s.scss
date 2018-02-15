@@ -1,0 +1,27 @@
+.b-travel-alert {
+  padding: 0 54px 10px 20px;
+  bottom: 33px;
+  z-index: 4;
+
+  .left-part, .right-part {
+    display: block;
+    vertical-align: middle;
+    padding: 6px 0;
+  }
+
+  .left-part {
+    padding-right: 0;
+    width: 166px;
+    font-size: 17px;
+    margin: 0 auto 5px;
+    text-align: center;
+    border-bottom: 1px solid #FBB59A;
+  }
+
+  .right-part {
+    padding: 0 9px;
+    width: 100%;
+    font-size: 12px;
+  }
+}
+
